@@ -28,4 +28,4 @@ spring:
         classpath:/sql/data-teacher.sql,
         classpath:/sql/data-teacher-class.sql,
         classpath:/sql/data-tpc.sql
-      mode: always
+      mode: never
