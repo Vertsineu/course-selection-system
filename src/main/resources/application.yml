@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: course-selection-system
+  config:
+    import: classpath:/conf/mysql.yml, classpath:/conf/mybatis.yml
+
+server:
+  port: 8000
+  servlet:
+    context-path: /api
