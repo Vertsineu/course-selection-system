@@ -6,7 +6,7 @@
     height:100%;
     z-index:-1;
     opacity:0.5;
-	background-image:url('welcomeBackground.jpg');
+	background-image:url('../../static/welcomeBackground.jpg');
 }
 .title1{
 	text-align:center;
