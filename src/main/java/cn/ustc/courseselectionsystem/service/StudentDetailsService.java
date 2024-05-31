@@ -1,9 +1,8 @@
 package cn.ustc.courseselectionsystem.service;
 
 import cn.ustc.courseselectionsystem.model.vo.LoginRequestVO;
-
-import java.util.Map;
+import cn.ustc.courseselectionsystem.model.vo.LoginResponseVO;
 
 public interface StudentDetailsService {
-    Map<String, Object> login(LoginRequestVO loginRequestVO);
+    LoginResponseVO login(LoginRequestVO loginRequestVO);
 }

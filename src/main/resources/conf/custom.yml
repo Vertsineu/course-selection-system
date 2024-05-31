@@ -1,2 +1,5 @@
+security:
+    ignore-paths: /api/account/login, /api/account/register
+
 token:
   secretKey: yhTRqrpTKO5vDIWrDhoOekWE67CA0QuC

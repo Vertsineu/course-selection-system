@@ -6,10 +6,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -17,14 +18,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class StudentAuthenticationFilter extends OncePerRequestFilter {
 
     @Resource
     private TokenUtil tokenUtil;
 
+    @Value("${security.ignore-paths}")
+    private List<String> ignorePaths;
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         if (isFilterRequest(request)) {
             filterChain.doFilter(request, response);
             return;
@@ -50,10 +53,8 @@ public class StudentAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isFilterRequest(HttpServletRequest request) {
-        String contextPath = request.getContextPath();
-        String filterPath = request.getRequestURI();
-        String path = contextPath + filterPath;
-        return "/api/account/login".equals(path);
+        String path = request.getContextPath() + request.getRequestURI();
+        return ignorePaths.contains(path);
     }
 
 }
