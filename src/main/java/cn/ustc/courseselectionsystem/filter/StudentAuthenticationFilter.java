@@ -1,7 +1,6 @@
 package cn.ustc.courseselectionsystem.filter;
 
 import cn.ustc.courseselectionsystem.util.TokenUtil;
-import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,9 +19,6 @@ import java.util.Map;
 
 public class StudentAuthenticationFilter extends OncePerRequestFilter {
 
-    @Resource
-    private TokenUtil tokenUtil;
-
     @Value("${security.ignore-paths}")
     private List<String> ignorePaths;
 
@@ -40,7 +36,7 @@ public class StudentAuthenticationFilter extends OncePerRequestFilter {
 
         Map<String, String> map;
         try {
-            map = tokenUtil.parseToken(token);
+            map = TokenUtil.parseToken(token);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("token非法");

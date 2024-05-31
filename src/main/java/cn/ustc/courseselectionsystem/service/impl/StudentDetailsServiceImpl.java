@@ -19,8 +19,6 @@ public class StudentDetailsServiceImpl implements StudentDetailsService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final TokenUtil tokenUtil;
-
     public LoginResponseVO login(LoginRequestVO loginRequestVO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequestVO.getUsername(), loginRequestVO.getPassword());
 
@@ -30,7 +28,7 @@ public class StudentDetailsServiceImpl implements StudentDetailsService {
         }
 
         Student student = (Student) authentication.getPrincipal();
-        String token = tokenUtil.createToken(student.getUsername(), student.getPassword());
+        String token = TokenUtil.createToken(student.getUsername(), student.getPassword());
 
         LoginResponseVO loginResponseVO = new LoginResponseVO();
         loginResponseVO.setToken(token);
