@@ -85,7 +85,7 @@ function query(){
 					teachLang:classes.teachLang,
 					departmentCode:classes.department.code,
 					departmentName:classes.department.name,
-					teacher:classes.teacher,
+					teacher:classes.teachers,
 					tpc:classes.tpc
 				}
 				var row=document.createElement("tr");
