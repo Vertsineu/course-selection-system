@@ -1,11 +1,13 @@
-package cn.ustc.courseselectionsystem.model.vo;
-
-import java.util.List;
+package cn.ustc.courseselectionsystem.model.po;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class CourseVO {
+@EqualsAndHashCode(of = "id")
+public class CoursePO {
+    private Integer id;
+
     private String code;
     private String name;
     private String category;
@@ -15,5 +17,4 @@ public class CourseVO {
     private Integer credits;
     private String education;
     private Integer periodTotal;
-    private List<ClassVO> classes;
 }

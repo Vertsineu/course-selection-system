@@ -2,8 +2,8 @@ package cn.ustc.courseselectionsystem.service.impl;
 
 import cn.ustc.courseselectionsystem.config.security.Student;
 import cn.ustc.courseselectionsystem.exp.LoginException;
-import cn.ustc.courseselectionsystem.model.vo.LoginRequestVO;
-import cn.ustc.courseselectionsystem.model.vo.LoginResponseVO;
+import cn.ustc.courseselectionsystem.model.vo.StudentLoginRequestVO;
+import cn.ustc.courseselectionsystem.model.vo.StudentLoginResponseVO;
 import cn.ustc.courseselectionsystem.service.StudentDetailsService;
 import cn.ustc.courseselectionsystem.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,10 @@ public class StudentDetailsServiceImpl implements StudentDetailsService {
 
     private final AuthenticationManager authenticationManager;
 
-    public LoginResponseVO login(LoginRequestVO loginRequestVO) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequestVO.getUsername(), loginRequestVO.getPassword());
+    private final TokenUtil tokenUtil;
+
+    public StudentLoginResponseVO login(StudentLoginRequestVO studentLoginRequestVO) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(studentLoginRequestVO.getUsername(), studentLoginRequestVO.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         if (Objects.isNull(authentication)) {
@@ -29,12 +31,12 @@ public class StudentDetailsServiceImpl implements StudentDetailsService {
         }
 
         Student student = (Student) authentication.getPrincipal();
-        String token = TokenUtil.createToken(student.getUsername(), student.getPassword());
+        String token = tokenUtil.createToken(student.getUsername(), student.getPassword());
 
-        LoginResponseVO loginResponseVO = new LoginResponseVO();
-        loginResponseVO.setToken(token);
+        StudentLoginResponseVO studentLoginResponseVO = new StudentLoginResponseVO();
+        studentLoginResponseVO.setToken(token);
 
-        return loginResponseVO;
+        return studentLoginResponseVO;
     }
 
 }

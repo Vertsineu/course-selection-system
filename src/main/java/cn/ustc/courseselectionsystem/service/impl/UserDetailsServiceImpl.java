@@ -3,7 +3,7 @@ package cn.ustc.courseselectionsystem.service.impl;
 import java.util.*;
 
 import cn.ustc.courseselectionsystem.config.security.Student;
-import cn.ustc.courseselectionsystem.mapper.StudentMapper;
+import cn.ustc.courseselectionsystem.mapper.StudentLoginMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final StudentMapper studentMapper;
+    private final StudentLoginMapper studentLoginMapper;
 
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        StudentPO student = studentMapper.queryStudentByNumber(username);
+//        StudentLoginPO student = studentMapper.queryStudentByNumber(username);
 //
 //        if (Objects.isNull(student)) {
 //            throw new UsernameNotFoundException("User not found");

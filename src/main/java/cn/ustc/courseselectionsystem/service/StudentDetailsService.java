@@ -1,8 +1,8 @@
 package cn.ustc.courseselectionsystem.service;
 
-import cn.ustc.courseselectionsystem.model.vo.LoginRequestVO;
-import cn.ustc.courseselectionsystem.model.vo.LoginResponseVO;
+import cn.ustc.courseselectionsystem.model.vo.StudentLoginRequestVO;
+import cn.ustc.courseselectionsystem.model.vo.StudentLoginResponseVO;
 
 public interface StudentDetailsService {
-    LoginResponseVO login(LoginRequestVO loginRequestVO);
+    StudentLoginResponseVO login(StudentLoginRequestVO studentLoginRequestVO);
 }

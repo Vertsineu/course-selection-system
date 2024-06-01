@@ -5,10 +5,10 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import cn.ustc.courseselectionsystem.model.po.StudentPO;
+import cn.ustc.courseselectionsystem.model.po.StudentLoginPO;
 
 @Mapper
-public interface StudentMapper {
+public interface StudentLoginMapper {
 
     @Select("""
             select id, number, password, department_id from tbl_student
@@ -20,6 +20,6 @@ public interface StudentMapper {
         @Result(property = "password", column = "password"),
         @Result(property = "departmentId", column = "department_id")
     })
-    public StudentPO queryStudentByNumber(String number);
+    StudentLoginPO queryStudentByNumber(String number);
 
 }

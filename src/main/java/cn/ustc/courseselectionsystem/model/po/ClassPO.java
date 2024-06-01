@@ -1,9 +1,15 @@
-package cn.ustc.courseselectionsystem.model.vo;
+package cn.ustc.courseselectionsystem.model.po;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class ClassVO {
+@EqualsAndHashCode(of = "id")
+public class ClassPO {
+    private Integer id;
+    private Integer courseId;
+    private Integer departmentId;
+
     private String code;
     private String campus;
     private String type;
@@ -12,7 +18,4 @@ public class ClassVO {
     private Integer periodPerWeek;
     private Integer limitCount;
     private String teachLang;
-    private DepartmentVO department;
-    private String tpc;
-    private String teachers;
 }

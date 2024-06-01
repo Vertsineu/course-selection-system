@@ -3,7 +3,7 @@ package cn.ustc.courseselectionsystem.model.param;
 import lombok.Data;
 
 @Data
-public class ClassParam {
+public class QueryClassParam {
     private String semester;
     private String departmentCode;
     private String courseCode;

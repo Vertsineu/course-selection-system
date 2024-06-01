@@ -1,6 +1,6 @@
 security:
-    ignore-api-paths: /api/account/login
-    ignore-static-paths: /static/**, /, /*.html, /*/*.html, /*/*.css, /*/*.js
+    ignore-login-paths: /api/account/login, /login/**, /, /index.html, /favicon.ico
+    ignore-static-paths: /static/**, /*/*.css, /*/*.js
 
 token:
   secretKey: yhTRqrpTKO5vDIWrDhoOekWE67CA0QuC

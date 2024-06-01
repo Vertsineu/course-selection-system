@@ -1,6 +1,7 @@
 package cn.ustc.courseselectionsystem.config.security;
 
 import cn.ustc.courseselectionsystem.filter.StudentAuthenticationFilter;
+import cn.ustc.courseselectionsystem.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,17 +19,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    @Value("${security.ignore-api-paths}")
-    private String[] ignoreApiPaths;
+    @Value("${security.ignore-login-paths}")
+    private String[] ignoreLoginPaths;
 
     @Value("${security.ignore-static-paths}")
     private String[] ignoreStaticPaths;
+
+    private final TokenUtil tokenUtil;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,9 +42,9 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(ignoreApiPaths).permitAll()
+                    .requestMatchers(ignoreLoginPaths).permitAll()
                     .anyRequest().authenticated())
-                .addFilterBefore(new StudentAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new StudentAuthenticationFilter(List.of(ignoreLoginPaths), tokenUtil), UsernamePasswordAuthenticationFilter.class)
                 .build();
 
     }
