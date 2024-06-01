@@ -95,15 +95,15 @@ function query(){
 				var cell4=document.createElement("td");
 				var cell5=document.createElement("td");
 				cell1.textContent=thisClass.code+"\n"+thisClass.name+"\n"+thisClass.credits+"学分 "+thisClass.period+"学时 "+thisClass.education+" "+thisClass.courseType+" "+thisClass.classType+" "+thisClass.teachLang+" "+thisClass.examMode+" "+thisClass.gradation;
-				row.appentChild(cell1);
+				row.appendChild(cell1);
 				cell2.textContent=thisClass.departmentCode+"\n"+thisClass.departmentName;
-				row.appentChild(cell2);
+				row.appendChild(cell2);
 				cell3.textContent=thisClass.teacher;
-				row.appentChild(cell3);
+				row.appendChild(cell3);
 				cell4.textContent=thisClass.tpc;
-				row.appentChild(cell4);
+				row.appendChild(cell4);
 				cell5.textContent=thisClass.limitCount;
-				row.appentChild(cell5);
+				row.appendChild(cell5);
 				tbody.appendChild(row);
 			}
 		}
