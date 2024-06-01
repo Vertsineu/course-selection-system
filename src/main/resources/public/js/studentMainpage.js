@@ -15,8 +15,27 @@ function quit(){
 function query(){
 	var oldTable=document.getElementById("showCourse");
 	oldTable.innerHTML="";
-	var classList=new Array(10005);
-	var classNum=0;
+	var table=document.createElement("table");
+	var thead=document.createElement("thead");
+	var headerRow=document.createElement("tr");
+	var th1=document.createElement("th");
+	var th2=document.createElement("th");
+	var th3=document.createElement("th");
+	var th4=document.createElement("th");
+	var th5=document.createElement("th");
+	th1.textContent="课程";
+	headerRow.appendChild(th1);
+	th2.textContent="开课单位";
+	headerRow.appendChild(th2);
+	th3.textContent="授课教师";
+	headerRow.appendChild(th3);
+	th4.textContent="时间地点";
+	headerRow.appendChild(th4);
+	th5.textContent="课堂容量";
+	headerRow.appendChild(th5);
+	thead.appendChild(headerRow);
+	table.appendChild(thead);
+	var tbody=document.createElement("tbody");
 	var semester=document.getElementById("semester").value;
 	var college=document.getElementById("college").value;
 	var courseName=document.getElementById("courseName").value;
@@ -48,10 +67,10 @@ function query(){
 		mode:"cors",
 		body:JSON.stringify(courseinfo)
 	}).then(function(response){
-		return response.json().data.courseList
+		return response.json();
 	}).then(function(result){
-		for(let course in result){
-			for(let classes in course.classes){
+		for(let course of result.data.courseList){
+			for(let classes of course.classes){
 				var thisClass={
 					name:course.name,
 					gradation:course.gradation,
@@ -69,53 +88,28 @@ function query(){
 					teacher:classes.teacher,
 					tpc:classes.tpc
 				}
-				classList[classNum]=thisClass;
-				classNum++;
+				var row=document.createElement("tr");
+				var cell1=document.createElement("td");
+				var cell2=document.createElement("td");
+				var cell3=document.createElement("td");
+				var cell4=document.createElement("td");
+				var cell5=document.createElement("td");
+				cell1.textContent=thisClass.code+"\n"+thisClass.name+"\n"+thisClass.credits+"学分 "+thisClass.period+"学时 "+thisClass.education+" "+thisClass.courseType+" "+thisClass.classType+" "+thisClass.teachLang+" "+thisClass.examMode+" "+thisClass.gradation;
+				row.appentChild(cell1);
+				cell2.textContent=thisClass.departmentCode+"\n"+thisClass.departmentName;
+				row.appentChild(cell2);
+				cell3.textContent=thisClass.teacher;
+				row.appentChild(cell3);
+				cell4.textContent=thisClass.tpc;
+				row.appentChild(cell4);
+				cell5.textContent=thisClass.limitCount;
+				row.appentChild(cell5);
+				tbody.appendChild(row);
 			}
 		}
 	}).catch(function(error){
 		console.log(error);
 	});
-	var table=document.createElement("table");
-	var thead=document.createElement("thead");
-	var headerRow=document.createElement("tr");
-	var th1=document.createElement("th");
-	var th2=document.createElement("th");
-	var th3=document.createElement("th");
-	var th4=document.createElement("th");
-	var th5=document.createElement("th");
-	th1.textContent="课程";
-	headerRow.appendChild(th1);
-	th2.textContent="开课单位";
-	headerRow.appendChild(th2);
-	th3.textContent="授课教师";
-	headerRow.appendChild(th3);
-	th4.textContent="时间地点";
-	headerRow.appendChild(th4);
-	th5.textContent="课堂容量";
-	headerRow.appendChild(th5);
-	thead.appendChild(headerRow);
-	table.appendChild(thead);
-	var tbody=document.createElement("tbody");
-	for(var i=0;i<classNum;i++){
-		var row=document.createElement("tr");
-		var cell1=document.createElement("td");
-		var cell2=document.createElement("td");
-		var cell3=document.createElement("td");
-		var cell4=document.createElement("td");
-		var cell5=document.createElement("td");
-		cell1.textContent=classList[i].code+"\n"+classList[i].name+"\n"+classList[i].credits+"学分 "+classList[i].period+"学时 "+classList[i].education+" "+classList[i].courseType+" "+classList[i].classType+" "+classList[i].teachLang+" "+classList[i].examMode+" "+classList[i].gradation;
-		row.appentChild(cell1);
-		cell2.textContent=classList[i].departmentCode+"\n"+classList[i].departmentName;
-		row.appentChild(cell2);
-		cell3.textContent=classList[i].teacher;
-		row.appentChild(cell3);
-		cell4.textContent=classList[i].tpc;
-		row.appentChild(cell4);
-		cell5.textContent=classList[i].limitCount;
-		row.appentChild(cell5);
-		tbody.appendChild(row);
-	}
 	table.appendChild(tbody);
 	document.getElementById("showCourse").appendChild(table);
 }
