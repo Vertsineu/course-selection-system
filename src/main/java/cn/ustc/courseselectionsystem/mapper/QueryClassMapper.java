@@ -85,4 +85,12 @@ public interface QueryClassMapper {
         @Result(property = "name", column = "name_cn")
     })
     List<TeacherPO> queryTeacherByClassId(Integer classId);
+
+    @Select("""
+            select id, department_id, name_cn
+            from tbl_teacher
+            where id = #{id}
+            """)
+    @ResultMap("teacherMap")
+    TeacherPO queryTeacherById(Integer id);
 }
