@@ -42,7 +42,7 @@ public class QueryClassServiceImpl implements QueryClassService {
 
             List<TpcPO> tpcList = queryClassMapper.queryTpcByClassId(classPO.getId());
             String tpc = tpcList.stream()
-                    .map(tpcPO -> tpcPO.getTimeWeek() + ' ' + tpcPO.getPlace() + ' ' + ':' + tpcPO.getTimeDay() + '(' + tpcPO.getTimePeriod() + ')')
+                    .map(tpcPO -> tpcPO.getTimeWeek() + ' ' + tpcPO.getPlace() + ' ' + ':' + tpcPO.getTimeDay() + '(' + tpcPO.getTimePeriod() + ')' + ' ' + queryClassMapper.queryTeacherById(tpcPO.getTeacherId()).getName())
                     .reduce((s1, s2) -> s1 + '\n' + s2).orElse("");
 
             // 添加进 courseWithClassMap
