@@ -16,18 +16,18 @@ public interface QueryClassMapper {
         @Result(property= "code", column = "code"),
         @Result(property = "courseId", column = "course_id"),
         @Result(property = "departmentId", column = "department_id"),
-        @Result(property = "campus", column = "campus"),
-        @Result(property = "type", column = "type"),
-        @Result(property = "examMode", column = "exam_mode"),
+        @Result(property = "campus", column = "campus_cn"),
+        @Result(property = "type", column = "type_cn"),
+        @Result(property = "examMode", column = "exam_mode_cn"),
         @Result(property = "graduateAndPostGraduate", column = "graduate_and_post_graduate"),
         @Result(property = "periodPerWeek", column = "period_per_week"),
         @Result(property = "limitCount", column = "limit_count"),
-        @Result(property = "teachLang", column = "teach_lang")
+        @Result(property = "teachLang", column = "teach_lang_cn")
     })
     List<ClassPO> queryClassByParam(QueryClassMapperParam param);
 
     @Select("""
-           select id, code, name_cn, category_cn , classify_cn , gradation_cn , type_cn , credits, education_cn as education, period_total as periodTotal
+           select id, code, name_cn, category_cn , classify_cn , gradation_cn , type_cn , credits, education_cn, period_total
            from tbl_course
            where id = #{id}
            """)
@@ -40,8 +40,8 @@ public interface QueryClassMapper {
         @Result(property = "gradation", column = "gradation_cn"),
         @Result(property = "type", column = "type_cn"),
         @Result(property = "credits", column = "credits"),
-        @Result(property = "education", column = "education"),
-        @Result(property = "periodTotal", column = "periodTotal")
+        @Result(property = "education", column = "education_cn"),
+        @Result(property = "periodTotal", column = "period_total")
     })
     CoursePO queryCourseById(Integer id);
 

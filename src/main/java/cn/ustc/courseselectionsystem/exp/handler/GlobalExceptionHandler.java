@@ -7,13 +7,14 @@ import cn.ustc.courseselectionsystem.rsp.None;
 import cn.ustc.courseselectionsystem.rsp.R;
 import cn.ustc.courseselectionsystem.rsp.REnum;
 import cn.ustc.courseselectionsystem.rsp.RUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({LoginException.class})
+    @ExceptionHandler({LoginException.class, UsernameNotFoundException.class})
     public R<None> handleLoginException(LoginException e) {
         return RUtils.failure(REnum.LOGIN_FAILURE, e.getMessage());
     }

@@ -1,9 +1,6 @@
 package cn.ustc.courseselectionsystem.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import cn.ustc.courseselectionsystem.model.po.StudentLoginPO;
 
@@ -21,5 +18,11 @@ public interface StudentLoginMapper {
         @Result(property = "departmentId", column = "department_id")
     })
     StudentLoginPO queryStudentByNumber(String number);
+
+    @Insert("""
+            insert into tbl_student (number, password, department_id)
+            values (#{number}, #{password}, #{departmentId})
+            """)
+    int insertStudent(StudentLoginPO student);
 
 }
