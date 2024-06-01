@@ -35,7 +35,7 @@ function query(){
 		courseCode:courseID,
 		teacherName:teacher
 	}
-	var url="/api/course/query";
+	var url="/api/query/forClass";
 	fetch(url,{
 		method:"POST",
 		headers:{
@@ -44,7 +44,7 @@ function query(){
 		mode:"cors",
 		body:JSON.stringify(courseinfo)
 	}).then(function(response){
-		return response.json()
+		return response.json().courseList
 	}).then(function(result){
 		for(let course in result.data){
 			for(let classes in course.classes){
