@@ -19,8 +19,8 @@ import java.util.Map;
 
 public class StudentAuthenticationFilter extends OncePerRequestFilter {
 
-    @Value("${security.ignore-paths}")
-    private List<String> ignorePaths;
+    @Value("${security.ignore-api-paths}")
+    private List<String> ignoreApiPaths;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -50,7 +50,7 @@ public class StudentAuthenticationFilter extends OncePerRequestFilter {
 
     private boolean isFilterRequest(HttpServletRequest request) {
         String path = request.getContextPath() + request.getRequestURI();
-        return ignorePaths.contains(path);
+        return ignoreApiPaths.contains(path);
     }
 
 }

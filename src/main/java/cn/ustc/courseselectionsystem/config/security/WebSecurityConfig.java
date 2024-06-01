@@ -24,8 +24,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    @Value("${security.ignore-paths}")
-    private String[] ignorePaths;
+    @Value("${security.ignore-api-paths}")
+    private String[] ignoreApiPaths;
+
+    @Value("${security.ignore-static-paths}")
+    private String[] ignoreStaticPaths;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -34,9 +37,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(ignorePaths).permitAll()
-                    .requestMatchers("/static/**").permitAll()
-                    .requestMatchers("/", "/*.html", "/*/*.html", "/*/*.css", "/*/*.js").permitAll()
+                    .requestMatchers(ignoreApiPaths).permitAll()
                     .anyRequest().authenticated())
                 .addFilterBefore(new StudentAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -46,8 +47,7 @@ public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer securityWebFilterChain() {
         return web -> web.ignoring()
-                .requestMatchers("/static/**")
-                .requestMatchers("/", "/*.html", "/*/*.html", "/*/*.css", "/*/*.js");
+                .requestMatchers(ignoreStaticPaths);
     }
 
     @Bean

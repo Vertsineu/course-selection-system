@@ -1,6 +1,7 @@
 package cn.ustc.courseselectionsystem.service.impl;
 
 import cn.ustc.courseselectionsystem.config.security.Student;
+import cn.ustc.courseselectionsystem.exp.LoginException;
 import cn.ustc.courseselectionsystem.model.vo.LoginRequestVO;
 import cn.ustc.courseselectionsystem.model.vo.LoginResponseVO;
 import cn.ustc.courseselectionsystem.service.StudentDetailsService;
@@ -24,7 +25,7 @@ public class StudentDetailsServiceImpl implements StudentDetailsService {
 
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         if (Objects.isNull(authentication)) {
-            throw new RuntimeException("用户名或密码错误");
+            throw new LoginException("用户名或密码错误");
         }
 
         Student student = (Student) authentication.getPrincipal();
@@ -35,4 +36,5 @@ public class StudentDetailsServiceImpl implements StudentDetailsService {
 
         return loginResponseVO;
     }
+
 }

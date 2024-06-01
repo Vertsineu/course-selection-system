@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum REnum {
     SUCCESS(200, "成功"),
     FAILURE(400, "失败"),
-    
+    LOGIN_FAILURE(401, "登录失败"),
     ;
 
     private Integer code;

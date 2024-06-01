@@ -3,6 +3,9 @@ spring:
     name: course-selection-system
   config:
     import: classpath:/conf/mysql.yml, classpath:/conf/mybatis.yml, classpath:/conf/custom.yml
+  web:
+    resources:
+      static-locations: classpath:/static/
 
 server:
   port: 8000

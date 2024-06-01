@@ -7,11 +7,11 @@ public class RUtils {
     }
     
     public static <T> R<T> success(T data) {
-        return create(REnum.SUCCESS, null, data);
+        return create(REnum.SUCCESS, "", data);
     }
    
     public static <T> R<T> success() {
-        return create(REnum.SUCCESS, null, null);
+        return create(REnum.SUCCESS, "", null);
     }
 
     public static <T> R<T> failure(REnum renum, String msg, T data) {
