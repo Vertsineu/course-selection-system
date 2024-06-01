@@ -1,3 +1,5 @@
+var pageTotal;
+var pageNow;
 function show(contentId){
     var contents=document.querySelectorAll('.content');
     contents.forEach(function(content){
@@ -23,6 +25,7 @@ function query(){
 	var th3=document.createElement("th");
 	var th4=document.createElement("th");
 	var th5=document.createElement("th");
+	var courseNum=0;
 	th1.textContent="课程";
 	headerRow.appendChild(th1);
 	th1.style.width="30%";
@@ -76,6 +79,7 @@ function query(){
 	}).then(function(result){
 		for(let course of result.data.courseList){
 			for(let classes of course.classes){
+				courseNum++;
 				var thisClass={
 					name:course.name,
 					gradation:course.gradation,
@@ -116,5 +120,12 @@ function query(){
 		console.log(error);
 	});
 	table.appendChild(tbody);
+	pageTotal=Math.ceil(courseNum/25);
+	pageNow=1;
+	const rows=document.querySelectorAll('table tbody tr');
+	for(let i=25;i<rows.length;i++){
+		rows[i].style.display='none';
+	}
 	document.getElementById("showCourse").appendChild(table);
+	document.getElementById('pageNum').innerText=pageNow;
 }
