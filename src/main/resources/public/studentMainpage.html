@@ -1,0 +1,123 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>选课系统主页</title>
+		<link rel="stylesheet" href="css/studentMainpage.css"/>
+		<script src="js/studentMainpage.js"></script>
+	</head>
+	<body>
+		<button onclick="quit()">退出登录</button>
+		<div class="button-container1">
+			<button class="button1" onclick="show('courseSelect')">进入选课</button>
+			<button class="button1" onclick="show('courseQuery')">课程查询</button>
+			<button class="button1" onclick="show('myCourse')">我的课表</button>
+		</div>
+		<div id="courseSelect" class="content active">
+			<p class="title1">进入选课</p>
+		</div>
+		<div id="courseQuery" class="content">
+			<br><br><br>
+			<div class="select-container1">
+				<span class="select">学期：</span>
+				<select class="select" id="semester">
+					<option value=null>全部学期</option>
+					<option value="20241">2024级春季学期</option>
+					<option value="20232">2023级秋季学期</option>
+				</select>
+				<span class="select">开课院系：</span>
+				<select class="select" id="college">
+					<option value=null>全部院系</option>
+					<option value="000">000 少年班学院</option>
+					<option value="001">001 数学科学学院</option>
+					<option value="168">168 合肥物质研究院</option>
+					<option value="169">169 金属所</option>
+					<option value="170">170 紫金山天文台</option>
+					<option value="175">175 长春应化所</option>
+					<option value="179">179 稀土研究院</option>
+					<option value="200">200 本科生院</option>
+					<option value="102">&nbsp;&nbsp;&nbsp;&nbsp;102 通识教育中心</option>
+					<option value="103">&nbsp;&nbsp;&nbsp;&nbsp;103 体育教学中心</option>
+					<option value="108">&nbsp;&nbsp;&nbsp;&nbsp;108 外语教育中心</option>
+					<option value="109">&nbsp;&nbsp;&nbsp;&nbsp;109 艺术教育中心</option>
+					<option value="203">203 物理学院</option>
+					<option value="002">&nbsp;&nbsp;&nbsp;&nbsp;002 物理学系</option>
+					<option value="004">&nbsp;&nbsp;&nbsp;&nbsp;004 近代物理系</option>
+					<option value="022">&nbsp;&nbsp;&nbsp;&nbsp;022 天文学系</option>
+					<option value="038">&nbsp;&nbsp;&nbsp;&nbsp;038 光学与光学工程系</option>
+					<option value="042">&nbsp;&nbsp;&nbsp;&nbsp;042 物理实验教学中心</option>
+					<option value="048">&nbsp;&nbsp;&nbsp;&nbsp;048 工程与应用物理系</option>
+					<option value="204">204 管理学院</option>
+					<option value="015">&nbsp;&nbsp;&nbsp;&nbsp;015 工商管理系</option>
+					<option value="016">&nbsp;&nbsp;&nbsp;&nbsp;016 管理科学系</option>
+					<option value="017">&nbsp;&nbsp;&nbsp;&nbsp;017 统计与金融系</option>
+					<option value="034">&nbsp;&nbsp;&nbsp;&nbsp;034 MBA中心</option>
+					<option value="040">&nbsp;&nbsp;&nbsp;&nbsp;040 项目管理教育中心</option>
+					<option value="050">&nbsp;&nbsp;&nbsp;&nbsp;050 MF中心（金融专硕）</option>
+					<option value="206">206 化学与材料科学学院</option>
+					<option value="003">&nbsp;&nbsp;&nbsp;&nbsp;003 化学物理系</option>
+					<option value="012">&nbsp;&nbsp;&nbsp;&nbsp;012 应用化学系</option>
+					<option value="014">&nbsp;&nbsp;&nbsp;&nbsp;014 材料科学与工程系</option>
+					<option value="019">&nbsp;&nbsp;&nbsp;&nbsp;019 化学系</option>
+					<option value="020">&nbsp;&nbsp;&nbsp;&nbsp;020 高分子科学与工程系</option>
+					<option value="208">208 地球与空间科学学院</option>
+					<option value="209">209 工程科学学院</option>
+					<option value="005">&nbsp;&nbsp;&nbsp;&nbsp;005 近代力学系</option>
+					<option value="009">&nbsp;&nbsp;&nbsp;&nbsp;009 精密机械与精密仪器系</option>
+					<option value="013">&nbsp;&nbsp;&nbsp;&nbsp;013 热科学和能源工程系</option>
+					<option value="030">&nbsp;&nbsp;&nbsp;&nbsp;030 安全科学与工程系</option>
+					<option value="210">210 信息科学技术学院</option>
+					<option value="006">&nbsp;&nbsp;&nbsp;&nbsp;006 电子工程与信息科学系</option>
+					<option value="010">&nbsp;&nbsp;&nbsp;&nbsp;010 自动化系</option>
+					<option value="023">&nbsp;&nbsp;&nbsp;&nbsp;023 电子科学与技术系</option>
+					<option value="211">211 人文与社会科学学院</option>
+					<option value="024">&nbsp;&nbsp;&nbsp;&nbsp;024 科技史与科技考古系</option>
+					<option value="025">&nbsp;&nbsp;&nbsp;&nbsp;025 科技传播系</option>
+					<option value="055">&nbsp;&nbsp;&nbsp;&nbsp;055 科技哲学系</option>
+					<option value="056">&nbsp;&nbsp;&nbsp;&nbsp;056 心理学系</option>
+					<option value="057">&nbsp;&nbsp;&nbsp;&nbsp;057 语言科学交叉研究中心</option>
+					<option value="214">214 核科学技术学院</option>
+					<option value="215">215 计算机科学与技术学院</option>
+					<option value="011">&nbsp;&nbsp;&nbsp;&nbsp;011 计算机科学与技术系</option>
+					<option value="216">216 公共事务学院</option>
+					<option value="041">&nbsp;&nbsp;&nbsp;&nbsp;041 MPA中心1</option>
+					<option value="043">&nbsp;&nbsp;&nbsp;&nbsp;043 法学硕士教育中心</option>
+					<option value="218">218 先进技术研究院</option>
+					<option value="219">219 微电子学院</option>
+					<option value="220">220 马克思主义学院</option>
+					<option value="221">221 网络空间安全学院</option>
+					<option value="225">225 软件学院</option>
+					<option value="A13">&nbsp;&nbsp;&nbsp;&nbsp;A13 软件学院合肥</option>
+					<option value="A14">&nbsp;&nbsp;&nbsp;&nbsp;A14 软件学院苏州</option>
+					<option value="229">229 人工智能与数据科学学院</option>
+					<option value="231">231 国家同步辐射实验室</option>
+					<option value="232">232 火灾科学国家重点实验室</option>
+					<option value="234">234 合肥微尺度物质科学国家实验室（筹）</option>
+					<option value="240">240 环境科学与工程系（直属）</option>
+					<option value="302">302 图书馆</option>
+					<option value="504">504 国际合作与交流部</option>
+					<option value="529">529 创新创业学院</option>
+					<option value="601">601 教务处</option>
+					<option value="910">910 生命科学与医学部</option>
+					<option value="207">&nbsp;&nbsp;&nbsp;&nbsp;207 生命科学学院</option>
+					<option value="916">916 生物医学工程学院</option>
+					<option value="999">999 未来技术学院</option>
+					<option value="A15">A15 纳米学院</option>
+				</select>
+				<span class="select">课程名：</span>
+					<input type="text" id="courseName" class="select" placeholder="请输入课程名">
+				<span class="select">课堂编号：</span>
+					<input type="text" id="courseID" class="select" placeholder="请输入课堂编号">
+				<span class="select">教师：</span>
+					<input type="text" id="teacher" class="select" placeholder="请输入教师名">
+				<br><br>
+				<button onclick="query()">查询</button>
+				<br>
+			</div>
+			<div id="showCourse" class="classList"></div>
+		</div>
+		<div id="myCourse" class="content">
+			<p class="title1">我的课表</p>
+		</div>
+	</body>
+</html>
