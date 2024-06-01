@@ -45,7 +45,7 @@ function query(){
 		semester=null;
 	if(college=="null")
 		college=null;
-	if(courseName="")
+	if(courseName=="")
 		courseName=null;
 	if(courseID=="")
 		courseID=null;
