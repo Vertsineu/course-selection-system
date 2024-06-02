@@ -106,12 +106,13 @@ function query(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	var cell1=document.createElement("td");
-	var cell2=document.createElement("td");
-	var cell3=document.createElement("td");
-	var cell4=document.createElement("td");
-	var cell5=document.createElement("td");
 	for(let i=0;i<Math.min(classArray.length,25);i++){
+		var row=document.createElement("tr");
+		var cell1=document.createElement("td");
+		var cell2=document.createElement("td");
+		var cell3=document.createElement("td");
+		var cell4=document.createElement("td");
+		var cell5=document.createElement("td");
 		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
 		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
 		cell3.textContent=classArray[i].teacher;
@@ -163,12 +164,13 @@ function queryLastPage(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	var cell1=document.createElement("td");
-	var cell2=document.createElement("td");
-	var cell3=document.createElement("td");
-	var cell4=document.createElement("td");
-	var cell5=document.createElement("td");
 	for(let i=25*(pageNow-1);i<Math.min(classArray.length,25*pageNow);i++){
+		var row=document.createElement("tr");
+		var cell1=document.createElement("td");
+		var cell2=document.createElement("td");
+		var cell3=document.createElement("td");
+		var cell4=document.createElement("td");
+		var cell5=document.createElement("td");
 		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
 		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
 		cell3.textContent=classArray[i].teacher;
@@ -220,12 +222,13 @@ function queryNextPage(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	var cell1=document.createElement("td");
-	var cell2=document.createElement("td");
-	var cell3=document.createElement("td");
-	var cell4=document.createElement("td");
-	var cell5=document.createElement("td");
 	for(let i=25*(pageNow-1);i<Math.min(classArray.length,25*pageNow);i++){
+		var row=document.createElement("tr");
+		var cell1=document.createElement("td");
+		var cell2=document.createElement("td");
+		var cell3=document.createElement("td");
+		var cell4=document.createElement("td");
+		var cell5=document.createElement("td");
 		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
 		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
 		cell3.textContent=classArray[i].teacher;
