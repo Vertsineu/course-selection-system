@@ -144,6 +144,7 @@ function selectQuery(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("选课成功！");
+							classArray[i].selected=true;
 							classArray[i].selectedCount++;
 							selectButton.innerHTML="取消选课";
 						}
@@ -175,6 +176,7 @@ function selectQuery(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("取消成功！");
+							classArray[i].selected=false;
 							classArray[i].selectedCount--;
 							selectButton.innerHTML="选课";
 						}
@@ -273,6 +275,7 @@ function selectLastPage(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("选课成功！");
+							classArray[i].selected=true;
 							classArray[i].selectedCount++;
 							selectButton.innerHTML="取消选课";
 						}
@@ -304,6 +307,7 @@ function selectLastPage(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("取消成功！");
+							classArray[i].selected=false;
 							classArray[i].selectedCount--;
 							selectButton.innerHTML="选课";
 						}
@@ -399,6 +403,7 @@ function selectNextPage(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("选课成功！");
+							classArray[i].selected=true;
 							classArray[i].selectedCount++;
 							selectButton.innerHTML="取消选课";
 						}
@@ -430,6 +435,7 @@ function selectNextPage(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("取消成功！");
+							classArray[i].selected=false;
 							classArray[i].selectedCount--;
 							selectButton.innerHTML="选课";
 						}
