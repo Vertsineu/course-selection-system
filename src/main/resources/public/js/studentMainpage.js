@@ -147,6 +147,10 @@ function selectQuery(){
 							classArray[i].selected=true;
 							classArray[i].selectedCount++;
 							selectButton.innerHTML="取消选课";
+							var selectButtonCopy=selectButton.cloneNode(true);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
 						}
 						else
 							alert(result.msg);
@@ -179,6 +183,10 @@ function selectQuery(){
 							classArray[i].selected=false;
 							classArray[i].selectedCount--;
 							selectButton.innerHTML="选课";
+							var selectButtonCopy=selectButton.cloneNode(true);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
 						}
 						else
 							alert(result.msg);
@@ -278,6 +286,10 @@ function selectLastPage(){
 							classArray[i].selected=true;
 							classArray[i].selectedCount++;
 							selectButton.innerHTML="取消选课";
+							var selectButtonCopy=selectButton.cloneNode(true);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
 						}
 						else
 							alert(result.msg);
@@ -310,6 +322,10 @@ function selectLastPage(){
 							classArray[i].selected=false;
 							classArray[i].selectedCount--;
 							selectButton.innerHTML="选课";
+							var selectButtonCopy=selectButton.cloneNode(true);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
 						}
 						else
 							alert(result.msg);
@@ -406,6 +422,10 @@ function selectNextPage(){
 							classArray[i].selected=true;
 							classArray[i].selectedCount++;
 							selectButton.innerHTML="取消选课";
+							var selectButtonCopy=selectButton.cloneNode(true);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
 						}
 						else
 							alert(result.msg);
@@ -438,6 +458,10 @@ function selectNextPage(){
 							classArray[i].selected=false;
 							classArray[i].selectedCount--;
 							selectButton.innerHTML="选课";
+							var selectButtonCopy=selectButton.cloneNode(true);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
 						}
 						else
 							alert(result.msg);
