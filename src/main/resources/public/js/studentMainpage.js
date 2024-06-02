@@ -1,5 +1,4 @@
-var courseArray
-var classArray=[];
+var classArrayForSelect=[],classArrayForQuery=[];
 var pageTotalForSelect,pageNowForSelect,pageTotalForQuery,pageNowForQuery;
 function show(contentId){
     var contents=document.querySelectorAll('.content');
@@ -16,7 +15,7 @@ function quit(){
 	window.location.href="index.html";
 }
 function selectQuery(){
-	classArray=[];
+	classArrayForSelect=[];
 	var semester=document.getElementById("semesterForSelect").value;
 	var college=document.getElementById("collegeForSelect").value;
 	var courseName=document.getElementById("courseNameForSelect").value;
@@ -72,11 +71,11 @@ function selectQuery(){
 					tpc:classes.tpc,
 					selected:classes.selected
 				}
-				classArray.push(thisClass);
+				classArrayForSelect.push(thisClass);
 			}
 		}
 	}).then(function(){
-		pageTotalForSelect=Math.ceil(classArray.length/25);
+		pageTotalForSelect=Math.ceil(classArrayForSelect.length/25);
 		pageNowForSelect=1;
 		//显示课程列表
 		var oldTable=document.getElementById("showSelect");
@@ -111,7 +110,7 @@ function selectQuery(){
 		thead.appendChild(headerRow);
 		table.appendChild(thead);
 		var tbody=document.createElement("tbody");
-		for(let i=0;i<Math.min(classArray.length,25);i++){
+		for(let i=0;i<Math.min(classArrayForSelect.length,25);i++){
 			var row=document.createElement("tr");
 			var cell1=document.createElement("td");
 			var cell2=document.createElement("td");
@@ -119,21 +118,21 @@ function selectQuery(){
 			var cell4=document.createElement("td");
 			var cell5=document.createElement("td");
 			var cell6=document.createElement("td");
-			cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-			cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-			cell3.textContent=classArray[i].teacher;
-			cell4.textContent=classArray[i].tpc;
-			cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+			cell1.textContent=classArrayForSelect[i].code+"\n"+classArrayForSelect[i].name+"\n"+classArrayForSelect[i].credits+"学分 "+classArrayForSelect[i].period+"学时 "+classArrayForSelect[i].education+" "+classArrayForSelect[i].courseType+" "+classArrayForSelect[i].classType+" "+classArrayForSelect[i].teachLang+" "+classArrayForSelect[i].examMode+" "+classArrayForSelect[i].gradation;
+			cell2.textContent=classArrayForSelect[i].departmentCode+"\n"+classArrayForSelect[i].departmentName;
+			cell3.textContent=classArrayForSelect[i].teacher;
+			cell4.textContent=classArrayForSelect[i].tpc;
+			cell5.textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 			var selectButton=document.createElement("button");
-			if(classArray[i].selected==false)
+			if(classArrayForSelect[i].selected==false)
 				selectButton.innerHTML="选课";
 			else
 				selectButton.innerHTML="取消选课";
 			selectButton.addEventListener('click',function(){
 				var selectInfo={
-					id:classArray[i].id
+					id:classArrayForSelect[i].id
 				}
-				if(classArray[i].selected==false){
+				if(classArrayForSelect[i].selected==false){
 					var url="/api/course/select";
 					fetch(url,{
 						method:"POST",
@@ -147,9 +146,9 @@ function selectQuery(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("选课成功！");
-							classArray[i].selected=true;
-							classArray[i].selectedCount++;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							classArrayForSelect[i].selected=true;
+							classArrayForSelect[i].selectedCount++;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[5].querySelector('button').innerHTML="取消选课";
 						}
 						else
@@ -172,9 +171,9 @@ function selectQuery(){
 					}).then(function(result){
 						if(result.code==200){
 							alert("取消成功！");
-							classArray[i].selected=false;
-							classArray[i].selectedCount--;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+							classArrayForSelect[i].selected=false;
+							classArrayForSelect[i].selectedCount--;
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[5].querySelector('button').innerHTML="选课";
 						}
 						else
@@ -242,7 +241,7 @@ function LastPageForSelect(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	for(let i=25*(pageNowForSelect-1);i<Math.min(classArray.length,25*pageNowForSelect);i++){
+	for(let i=25*(pageNowForSelect-1);i<Math.min(classArrayForSelect.length,25*pageNowForSelect);i++){
 		var row=document.createElement("tr");
 		var cell1=document.createElement("td");
 		var cell2=document.createElement("td");
@@ -250,21 +249,21 @@ function LastPageForSelect(){
 		var cell4=document.createElement("td");
 		var cell5=document.createElement("td");
 		var cell6=document.createElement("td");
-		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-		cell3.textContent=classArray[i].teacher;
-		cell4.textContent=classArray[i].tpc;
-		cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+		cell1.textContent=classArrayForSelect[i].code+"\n"+classArrayForSelect[i].name+"\n"+classArrayForSelect[i].credits+"学分 "+classArrayForSelect[i].period+"学时 "+classArrayForSelect[i].education+" "+classArrayForSelect[i].courseType+" "+classArrayForSelect[i].classType+" "+classArrayForSelect[i].teachLang+" "+classArrayForSelect[i].examMode+" "+classArrayForSelect[i].gradation;
+		cell2.textContent=classArrayForSelect[i].departmentCode+"\n"+classArrayForSelect[i].departmentName;
+		cell3.textContent=classArrayForSelect[i].teacher;
+		cell4.textContent=classArrayForSelect[i].tpc;
+		cell5.textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 		var selectButton=document.createElement("button");
-		if(classArray[i].selected==false)
+		if(classArrayForSelect[i].selected==false)
 			selectButton.innerHTML="选课";
 		else
 			selectButton.innerHTML="取消选课";
 		selectButton.addEventListener('click',function(){
 			var selectInfo={
-				id:classArray[i].id
+				id:classArrayForSelect[i].id
 			}
-			if(classArray[i].selected==false){
+			if(classArrayForSelect[i].selected==false){
 				var url="/api/course/select";
 				fetch(url,{
 					method:"POST",
@@ -278,9 +277,9 @@ function LastPageForSelect(){
 				}).then(function(result){
 					if(result.code==200){
 						alert("选课成功！");
-						classArray[i].selected=true;
-						classArray[i].selectedCount++;
-						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						classArrayForSelect[i].selected=true;
+						classArrayForSelect[i].selectedCount++;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[5].querySelector('button').innerHTML="取消选课";
 					}
 					else
@@ -303,9 +302,9 @@ function LastPageForSelect(){
 				}).then(function(result){
 					if(result.code==200){
 						alert("取消成功！");
-						classArray[i].selected=false;
-						classArray[i].selectedCount--;
-						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						classArrayForSelect[i].selected=false;
+						classArrayForSelect[i].selectedCount--;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[5].querySelector('button').innerHTML="选课";
 					}
 					else
@@ -370,7 +369,7 @@ function NextPageForSelect(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	for(let i=25*(pageNowForSelect-1);i<Math.min(classArray.length,25*pageNowForSelect);i++){
+	for(let i=25*(pageNowForSelect-1);i<Math.min(classArrayForSelect.length,25*pageNowForSelect);i++){
 		var row=document.createElement("tr");
 		var cell1=document.createElement("td");
 		var cell2=document.createElement("td");
@@ -378,21 +377,21 @@ function NextPageForSelect(){
 		var cell4=document.createElement("td");
 		var cell5=document.createElement("td");
 		var cell6=document.createElement("td");
-		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-		cell3.textContent=classArray[i].teacher;
-		cell4.textContent=classArray[i].tpc;
-		cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+		cell1.textContent=classArrayForSelect[i].code+"\n"+classArrayForSelect[i].name+"\n"+classArrayForSelect[i].credits+"学分 "+classArrayForSelect[i].period+"学时 "+classArrayForSelect[i].education+" "+classArrayForSelect[i].courseType+" "+classArrayForSelect[i].classType+" "+classArrayForSelect[i].teachLang+" "+classArrayForSelect[i].examMode+" "+classArrayForSelect[i].gradation;
+		cell2.textContent=classArrayForSelect[i].departmentCode+"\n"+classArrayForSelect[i].departmentName;
+		cell3.textContent=classArrayForSelect[i].teacher;
+		cell4.textContent=classArrayForSelect[i].tpc;
+		cell5.textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 		var selectButton=document.createElement("button");
-		if(classArray[i].selected==false)
+		if(classArrayForSelect[i].selected==false)
 			selectButton.innerHTML="选课";
 		else
 			selectButton.innerHTML="取消选课";
 		selectButton.addEventListener('click',function(){
 			var selectInfo={
-				id:classArray[i].id
+				id:classArrayForSelect[i].id
 			}
-			if(classArray[i].selected==false){
+			if(classArrayForSelect[i].selected==false){
 				var url="/api/course/select";
 				fetch(url,{
 					method:"POST",
@@ -406,9 +405,9 @@ function NextPageForSelect(){
 				}).then(function(result){
 					if(result.code==200){
 						alert("选课成功！");
-						classArray[i].selected=true;
-						classArray[i].selectedCount++;
-						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						classArrayForSelect[i].selected=true;
+						classArrayForSelect[i].selectedCount++;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[5].querySelector('button').innerHTML="取消选课";
 					}
 					else
@@ -431,9 +430,9 @@ function NextPageForSelect(){
 				}).then(function(result){
 					if(result.code==200){
 						alert("取消成功！");
-						classArray[i].selected=false;
-						classArray[i].selectedCount--;
-						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						classArrayForSelect[i].selected=false;
+						classArrayForSelect[i].selectedCount--;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[4].textContent=classArrayForSelect[i].selectedCount+"/"+classArrayForSelect[i].limitCount;
 						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNowForSelect-1)+1].cells[5].querySelector('button').innerHTML="选课";
 					}
 					else
@@ -457,7 +456,7 @@ function NextPageForSelect(){
 	document.getElementById("pageNumForSelect").textContent=pageNowForSelect+'/'+pageTotalForSelect;
 }
 function query(){
-	classArray=[];
+	classArrayForQuery=[];
 	var semester=document.getElementById("semesterForQuery").value;
 	var college=document.getElementById("collegeForQuery").value;
 	var courseName=document.getElementById("courseNameForQuery").value;
@@ -510,11 +509,11 @@ function query(){
 					teacher:classes.teachers,
 					tpc:classes.tpc
 				}
-				classArray.push(thisClass);
+				classArrayForQuery.push(thisClass);
 			}
 		}
 	}).then(function(){
-		pageTotalForQuery=Math.ceil(classArray.length/25);
+		pageTotalForQuery=Math.ceil(classArrayForQuery.length/25);
 		pageNowForQuery=1;
 		//显示课程列表
 		var oldTable=document.getElementById("showCourse");
@@ -545,18 +544,18 @@ function query(){
 		thead.appendChild(headerRow);
 		table.appendChild(thead);
 		var tbody=document.createElement("tbody");
-		for(let i=0;i<Math.min(classArray.length,25);i++){
+		for(let i=0;i<Math.min(classArrayForQuery.length,25);i++){
 			var row=document.createElement("tr");
 			var cell1=document.createElement("td");
 			var cell2=document.createElement("td");
 			var cell3=document.createElement("td");
 			var cell4=document.createElement("td");
 			var cell5=document.createElement("td");
-			cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-			cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-			cell3.textContent=classArray[i].teacher;
-			cell4.textContent=classArray[i].tpc;
-			cell5.textContent=classArray[i].limitCount;
+			cell1.textContent=classArrayForQuery[i].code+"\n"+classArrayForQuery[i].name+"\n"+classArrayForQuery[i].credits+"学分 "+classArrayForQuery[i].period+"学时 "+classArrayForQuery[i].education+" "+classArrayForQuery[i].courseType+" "+classArrayForQuery[i].classType+" "+classArrayForQuery[i].teachLang+" "+classArrayForQuery[i].examMode+" "+classArrayForQuery[i].gradation;
+			cell2.textContent=classArrayForQuery[i].departmentCode+"\n"+classArrayForQuery[i].departmentName;
+			cell3.textContent=classArrayForQuery[i].teacher;
+			cell4.textContent=classArrayForQuery[i].tpc;
+			cell5.textContent=classArrayForQuery[i].limitCount;
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
@@ -609,18 +608,18 @@ function LastPageForQuery(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	for(let i=25*(pageNowForQuery-1);i<Math.min(classArray.length,25*pageNowForQuery);i++){
+	for(let i=25*(pageNowForQuery-1);i<Math.min(classArrayForQuery.length,25*pageNowForQuery);i++){
 		var row=document.createElement("tr");
 		var cell1=document.createElement("td");
 		var cell2=document.createElement("td");
 		var cell3=document.createElement("td");
 		var cell4=document.createElement("td");
 		var cell5=document.createElement("td");
-		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-		cell3.textContent=classArray[i].teacher;
-		cell4.textContent=classArray[i].tpc;
-		cell5.textContent=classArray[i].limitCount;
+		cell1.textContent=classArrayForQuery[i].code+"\n"+classArrayForQuery[i].name+"\n"+classArrayForQuery[i].credits+"学分 "+classArrayForQuery[i].period+"学时 "+classArrayForQuery[i].education+" "+classArrayForQuery[i].courseType+" "+classArrayForQuery[i].classType+" "+classArrayForQuery[i].teachLang+" "+classArrayForQuery[i].examMode+" "+classArrayForQuery[i].gradation;
+		cell2.textContent=classArrayForQuery[i].departmentCode+"\n"+classArrayForQuery[i].departmentName;
+		cell3.textContent=classArrayForQuery[i].teacher;
+		cell4.textContent=classArrayForQuery[i].tpc;
+		cell5.textContent=classArrayForQuery[i].limitCount;
 		row.appendChild(cell1);
 		row.appendChild(cell2);
 		row.appendChild(cell3);
@@ -670,18 +669,18 @@ function NextPageForQuery(){
 	thead.appendChild(headerRow);
 	table.appendChild(thead);
 	var tbody=document.createElement("tbody");
-	for(let i=25*(pageNowForQuery-1);i<Math.min(classArray.length,25*pageNowForQuery);i++){
+	for(let i=25*(pageNowForQuery-1);i<Math.min(classArrayForQuery.length,25*pageNowForQuery);i++){
 		var row=document.createElement("tr");
 		var cell1=document.createElement("td");
 		var cell2=document.createElement("td");
 		var cell3=document.createElement("td");
 		var cell4=document.createElement("td");
 		var cell5=document.createElement("td");
-		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-		cell3.textContent=classArray[i].teacher;
-		cell4.textContent=classArray[i].tpc;
-		cell5.textContent=classArray[i].limitCount;
+		cell1.textContent=classArrayForQuery[i].code+"\n"+classArrayForQuery[i].name+"\n"+classArrayForQuery[i].credits+"学分 "+classArrayForQuery[i].period+"学时 "+classArrayForQuery[i].education+" "+classArrayForQuery[i].courseType+" "+classArrayForQuery[i].classType+" "+classArrayForQuery[i].teachLang+" "+classArrayForQuery[i].examMode+" "+classArrayForQuery[i].gradation;
+		cell2.textContent=classArrayForQuery[i].departmentCode+"\n"+classArrayForQuery[i].departmentName;
+		cell3.textContent=classArrayForQuery[i].teacher;
+		cell4.textContent=classArrayForQuery[i].tpc;
+		cell5.textContent=classArrayForQuery[i].limitCount;
 		row.appendChild(cell1);
 		row.appendChild(cell2);
 		row.appendChild(cell3);
