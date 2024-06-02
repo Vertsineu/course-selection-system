@@ -68,7 +68,6 @@ function query(){
 					teacher:classes.teachers,
 					tpc:classes.tpc
 				}
-				classArray.length++;
 				classArray.push(thisClass);
 			}
 		}
@@ -126,7 +125,7 @@ function query(){
 		table.appendChild(tbody);
 		document.getElementById("showCourse").appendChild(table);
 		var pageShow=document.getElementById("pageNum");
-		pageShow.textContent=pageNow;
+		pageShow.textContent=pageNow+'/'+pageTotal;
 	}).catch(function(error){
 		console.log(error);
 	});
@@ -187,7 +186,7 @@ function queryLastPage(){
 	table.appendChild(tbody);
 	document.getElementById("showCourse").appendChild(table);
 	var pageShow=document.getElementById("pageNum");
-	pageShow.textContent=pageNow;
+	pageShow.textContent=pageNow+'/'+pageTotal;
 }
 function queryNextPage(){
 	if(pageNow===pageTotal){
@@ -245,5 +244,5 @@ function queryNextPage(){
 	table.appendChild(tbody);
 	document.getElementById("showCourse").appendChild(table);
 	var pageShow=document.getElementById("pageNum");
-	pageShow.textContent=pageNow;
+	pageShow.textContent=pageNow+'/'+pageTotal;
 }
