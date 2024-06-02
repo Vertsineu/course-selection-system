@@ -92,9 +92,9 @@ function selectQuery(){
 		th1.style.width="30%";
 		th2.style.width="10%";
 		th3.style.width="10%";
-		th4.style.width="30%";
+		th4.style.width="35%";
 		th5.style.width="10%";
-		th6.style.width="10%";
+		th6.style.width="5%";
 		th1.textContent="课程";
 		th2.textContent="开课单位";
 		th3.textContent="授课教师";
