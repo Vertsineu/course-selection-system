@@ -165,7 +165,7 @@ function selectQuery(){
 					}
 					var url="/api/course/delete";
 					fetch(url,{
-						method:"POST",
+						method:"DELETE",
 						headers:{
 							"Content-Type":"application/json",
 						},
@@ -296,7 +296,7 @@ function selectLastPage(){
 					}
 					var url="/api/course/delete";
 					fetch(url,{
-						method:"POST",
+						method:"DELETE",
 						headers:{
 							"Content-Type":"application/json",
 						},
@@ -424,7 +424,7 @@ function selectNextPage(){
 					}
 					var url="/api/course/delete";
 					fetch(url,{
-						method:"POST",
+						method:"DELETE",
 						headers:{
 							"Content-Type":"application/json",
 						},
