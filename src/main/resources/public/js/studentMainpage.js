@@ -195,8 +195,9 @@ function selectQuery(){
 		}
 		table.appendChild(tbody);
 		document.getElementById("showSelect").appendChild(table);
-		var pageShow=document.getElementById("pageNumForSelect");
-		pageShow.textContent=pageNow+'/'+pageTotal;
+		document.getElementById("selectLastPageButton").textContent="上一页";
+		document.getElementById("selectLastPageButton").textContent="下一页";
+		document.getElementById("pageNumForSelect").textContent=pageNow+'/'+pageTotal;
 	}).catch(function(error){
 		console.log(error);
 	});
@@ -323,8 +324,7 @@ function selectLastPage(){
 	}
 	table.appendChild(tbody);
 	document.getElementById("showSelect").appendChild(table);
-	var pageShow=document.getElementById("pageNumForSelect");
-	pageShow.textContent=pageNow+'/'+pageTotal;
+	document.getElementById("pageNumForSelect").textContent=pageNow+'/'+pageTotal;
 }
 function selectNextPage(){
 	if(pageNow>=pageTotal){
@@ -448,8 +448,7 @@ function selectNextPage(){
 	}
 	table.appendChild(tbody);
 	document.getElementById("showSelect").appendChild(table);
-	var pageShow=document.getElementById("pageNumForSelect");
-	pageShow.textContent=pageNow+'/'+pageTotal;
+	document.getElementById("pageNumForSelect").textContent=pageNow+'/'+pageTotal;
 }
 function query(){
 	classArray=[];
@@ -561,8 +560,9 @@ function query(){
 		}
 		table.appendChild(tbody);
 		document.getElementById("showCourse").appendChild(table);
-		var pageShow=document.getElementById("pageNumForQuery");
-		pageShow.textContent=pageNow+'/'+pageTotal;
+		document.getElementById("queryLastPageButton").textContent="上一页";
+		document.getElementById("queryLastPageButton").textContent="下一页";
+		document.getElementById("pageNumForQuery").textContent=pageNow+'/'+pageTotal;
 	}).catch(function(error){
 		console.log(error);
 	});
@@ -622,8 +622,7 @@ function queryLastPage(){
 	}
 	table.appendChild(tbody);
 	document.getElementById("showCourse").appendChild(table);
-	var pageShow=document.getElementById("pageNumForQuery");
-	pageShow.textContent=pageNow+'/'+pageTotal;
+	document.getElementById("pageNumForQuery").textContent=pageNow+'/'+pageTotal;
 }
 function queryNextPage(){
 	if(pageNow>=pageTotal){
@@ -680,6 +679,5 @@ function queryNextPage(){
 	}
 	table.appendChild(tbody);
 	document.getElementById("showCourse").appendChild(table);
-	var pageShow=document.getElementById("pageNumForQuery");
-	pageShow.textContent=pageNow+'/'+pageTotal;
+	document.getElementById("pageNumForQuery").textContent=pageNow+'/'+pageTotal;
 }
