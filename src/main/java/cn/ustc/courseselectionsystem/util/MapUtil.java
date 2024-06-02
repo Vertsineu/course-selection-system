@@ -5,10 +5,12 @@ import cn.ustc.courseselectionsystem.model.param.QueryClassParam;
 import cn.ustc.courseselectionsystem.model.po.ClassPO;
 import cn.ustc.courseselectionsystem.model.po.CoursePO;
 import cn.ustc.courseselectionsystem.model.po.DepartmentPO;
+import cn.ustc.courseselectionsystem.model.po.StudentInfoPO;
 import cn.ustc.courseselectionsystem.model.tuple.DepartmentTeachersTpcTuple;
 import cn.ustc.courseselectionsystem.model.vo.ClassVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseVO;
 import cn.ustc.courseselectionsystem.model.vo.DepartmentVO;
+import cn.ustc.courseselectionsystem.model.vo.StudentInfoVO;
 
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class MapUtil {
 
     public static DepartmentVO mapToDepartmentPO(DepartmentPO departmentPO) {
         DepartmentVO departmentVO = new DepartmentVO();
+        departmentVO.setId(departmentPO.getId());
         departmentVO.setCode(departmentPO.getCode());
         departmentVO.setName(departmentPO.getName());
         departmentVO.setCollege(departmentPO.getCollege());
@@ -32,6 +35,7 @@ public class MapUtil {
 
     public static ClassVO mapToClassVO(ClassPO classPO, DepartmentTeachersTpcTuple tuple) {
         ClassVO classVO = new ClassVO();
+        classVO.setId(classPO.getId());
         classVO.setCode(classPO.getCode());
         classVO.setCampus(classPO.getCampus());
         classVO.setType(classPO.getType());
@@ -50,6 +54,7 @@ public class MapUtil {
 
     public static CourseVO mapToCourseVO(CoursePO coursePO, List<ClassVO> classVOList) {
         CourseVO courseVO = new CourseVO();
+        courseVO.setId(coursePO.getId());
         courseVO.setCode(coursePO.getCode());
         courseVO.setName(coursePO.getName());
         courseVO.setCategory(coursePO.getCategory());
@@ -63,4 +68,11 @@ public class MapUtil {
         return courseVO;
     }
 
+    public static StudentInfoVO mapToStudentInfoVO(StudentInfoPO studentInfoPO) {
+        StudentInfoVO studentInfoVO = new StudentInfoVO();
+        studentInfoVO.setId(studentInfoPO.getId());
+        studentInfoVO.setNumber(studentInfoPO.getNumber());
+        studentInfoVO.setDepartment(mapToDepartmentPO(studentInfoPO.getDepartment()));
+        return studentInfoVO;
+    }
 }

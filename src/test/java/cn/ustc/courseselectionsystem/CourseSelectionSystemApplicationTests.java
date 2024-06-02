@@ -1,12 +1,10 @@
 package cn.ustc.courseselectionsystem;
 
 import cn.ustc.courseselectionsystem.mapper.QueryClassMapper;
+import cn.ustc.courseselectionsystem.mapper.QueryStudentMapper;
 import cn.ustc.courseselectionsystem.mapper.StudentLoginMapper;
 import cn.ustc.courseselectionsystem.model.param.QueryClassMapperParam;
-import cn.ustc.courseselectionsystem.model.po.ClassPO;
-import cn.ustc.courseselectionsystem.model.po.CoursePO;
-import cn.ustc.courseselectionsystem.model.po.StudentLoginPO;
-import cn.ustc.courseselectionsystem.model.po.TeacherPO;
+import cn.ustc.courseselectionsystem.model.po.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +23,8 @@ class CourseSelectionSystemApplicationTests {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private QueryStudentMapper queryStudentMapper;
 
     @Test
     void addUser() {
@@ -60,6 +60,12 @@ class CourseSelectionSystemApplicationTests {
         queryClassMapperParam.setTeacherName(null);
         List<ClassPO> classPOS = queryClassMapper.queryClassByParam(queryClassMapperParam);
         System.out.println("classPOS = " + classPOS);
+    }
+
+    @Test
+    void testQueryStudentInfoByNumber() {
+        StudentInfoPO studentLoginPO = queryStudentMapper.queryStudentInfoByNumber("PB23010010");
+        System.out.println("studentLoginPO = " + studentLoginPO);
     }
 
 }

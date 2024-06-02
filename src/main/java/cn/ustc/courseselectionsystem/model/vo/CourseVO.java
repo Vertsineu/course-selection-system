@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class CourseVO {
+    private Integer id;
+
     private String code;
     private String name;
     private String category;

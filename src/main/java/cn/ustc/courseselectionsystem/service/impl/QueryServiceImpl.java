@@ -1,6 +1,7 @@
 package cn.ustc.courseselectionsystem.service.impl;
 
 import cn.ustc.courseselectionsystem.mapper.QueryClassMapper;
+import cn.ustc.courseselectionsystem.mapper.QueryStudentMapper;
 import cn.ustc.courseselectionsystem.model.param.QueryClassMapperParam;
 import cn.ustc.courseselectionsystem.model.param.QueryClassParam;
 import cn.ustc.courseselectionsystem.model.po.*;
@@ -8,8 +9,10 @@ import cn.ustc.courseselectionsystem.model.tuple.DepartmentTeachersTpcTuple;
 import cn.ustc.courseselectionsystem.model.vo.ClassVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
-import cn.ustc.courseselectionsystem.service.QueryClassService;
+import cn.ustc.courseselectionsystem.model.vo.StudentInfoVO;
+import cn.ustc.courseselectionsystem.service.QueryService;
 import cn.ustc.courseselectionsystem.util.MapUtil;
+import cn.ustc.courseselectionsystem.util.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +21,11 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class QueryClassServiceImpl implements QueryClassService {
+public class QueryServiceImpl implements QueryService {
 
     private final QueryClassMapper queryClassMapper;
+    private final QueryStudentMapper queryStudentMapper;
+    private final TokenUtil tokenUtil;
 
     @Transactional(readOnly = true)
     @Override
@@ -67,5 +72,13 @@ public class QueryClassServiceImpl implements QueryClassService {
         });
 
         return new CourseWithClassListVO(courseVOList);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public StudentInfoVO forStudentInfo(String token) {
+        String username = tokenUtil.parseToken(token).get("username");
+        StudentInfoPO studentInfoPO = queryStudentMapper.queryStudentInfoByNumber(username);
+        return MapUtil.mapToStudentInfoVO(studentInfoPO);
     }
 }

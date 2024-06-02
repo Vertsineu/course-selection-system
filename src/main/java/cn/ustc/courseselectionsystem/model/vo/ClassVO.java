@@ -4,6 +4,8 @@ import lombok.Data;
 
 @Data
 public class ClassVO {
+    private Integer id;
+
     private String code;
     private String campus;
     private String type;
