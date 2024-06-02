@@ -5,6 +5,6 @@ import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
 import cn.ustc.courseselectionsystem.model.vo.StudentInfoVO;
 
 public interface QueryService {
-    CourseWithClassListVO forClass(QueryClassParam queryClassParam);
-    StudentInfoVO forStudentInfo(String token);
+    CourseWithClassListVO forClass(QueryClassParam queryClassParam, String username);
+    StudentInfoVO forStudentInfo(String username);
 }

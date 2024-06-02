@@ -9,6 +9,8 @@ public enum REnum {
     LOGIN_FAILURE(401, "登录失败"),
     TOKEN_ILLEGAL(402, "token非法"),
     COOKIE_ILLEGAL(403, "cookie非法"),
+    SELECT_CLASS_FAILURE(404, "选课失败"),
+    DELETE_CLASS_FAILURE(405, "退课失败"),
     ;
 
     private final Integer code;

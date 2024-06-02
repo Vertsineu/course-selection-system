@@ -93,4 +93,5 @@ public interface QueryClassMapper {
             """)
     @ResultMap("teacherMap")
     TeacherPO queryTeacherById(Integer id);
+
 }

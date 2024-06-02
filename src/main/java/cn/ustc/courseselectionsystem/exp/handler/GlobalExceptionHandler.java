@@ -1,8 +1,6 @@
 package cn.ustc.courseselectionsystem.exp.handler;
 
-import cn.ustc.courseselectionsystem.exp.CookieIllegalException;
-import cn.ustc.courseselectionsystem.exp.LoginException;
-import cn.ustc.courseselectionsystem.exp.TokenIllegalException;
+import cn.ustc.courseselectionsystem.exp.*;
 import cn.ustc.courseselectionsystem.rsp.None;
 import cn.ustc.courseselectionsystem.rsp.R;
 import cn.ustc.courseselectionsystem.rsp.REnum;
@@ -27,6 +25,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({CookieIllegalException.class})
     public R<None> handleCookieIllegalException(CookieIllegalException e) {
         return RUtils.failure(REnum.COOKIE_ILLEGAL, e.getMessage());
+    }
+
+    @ExceptionHandler({DeleteClassException.class})
+    public R<None> handleDeleteClassException(DeleteClassException e) {
+        return RUtils.failure(REnum.DELETE_CLASS_FAILURE, e.getMessage());
+    }
+
+    @ExceptionHandler({SelectClassException.class})
+    public R<None> handleSelectClassException(SelectClassException e) {
+        return RUtils.failure(REnum.SELECT_CLASS_FAILURE, e.getMessage());
     }
 
     @ExceptionHandler({Exception.class})

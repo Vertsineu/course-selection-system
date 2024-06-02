@@ -7,6 +7,7 @@ import cn.ustc.courseselectionsystem.model.po.CoursePO;
 import cn.ustc.courseselectionsystem.model.po.DepartmentPO;
 import cn.ustc.courseselectionsystem.model.po.StudentInfoPO;
 import cn.ustc.courseselectionsystem.model.tuple.DepartmentTeachersTpcTuple;
+import cn.ustc.courseselectionsystem.model.tuple.SelectStateTuple;
 import cn.ustc.courseselectionsystem.model.vo.ClassVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseVO;
 import cn.ustc.courseselectionsystem.model.vo.DepartmentVO;
@@ -33,7 +34,7 @@ public class MapUtil {
         return departmentVO;
     }
 
-    public static ClassVO mapToClassVO(ClassPO classPO, DepartmentTeachersTpcTuple tuple) {
+    public static ClassVO mapToClassVO(ClassPO classPO, DepartmentTeachersTpcTuple tuple, SelectStateTuple selectStateTuple) {
         ClassVO classVO = new ClassVO();
         classVO.setId(classPO.getId());
         classVO.setCode(classPO.getCode());
@@ -48,6 +49,8 @@ public class MapUtil {
         classVO.setDepartment(mapToDepartmentPO(tuple.getDepartment()));
         classVO.setTpc(tuple.getTpc());
         classVO.setTeachers(tuple.getTeachers());
+        classVO.setSelectedCount(selectStateTuple.getSelectedCount());
+        classVO.setSelected(selectStateTuple.getSelected());
 
         return classVO;
     }

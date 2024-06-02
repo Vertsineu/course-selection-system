@@ -17,4 +17,6 @@ public class ClassVO {
     private DepartmentVO department;
     private String tpc;
     private String teachers;
+    private Integer selectedCount;
+    private Boolean selected;
 }

@@ -5,6 +5,10 @@ public class RUtils {
     public static <T> R<T> success(String msg, T data) {
         return create(REnum.SUCCESS, msg, data);
     }
+
+    public static <T> R<T> success(String msg) {
+        return create(REnum.SUCCESS, msg, null);
+    }
     
     public static <T> R<T> success(T data) {
         return create(REnum.SUCCESS, "", data);
