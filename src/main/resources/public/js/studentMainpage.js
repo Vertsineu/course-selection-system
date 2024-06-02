@@ -124,13 +124,16 @@ function selectQuery(){
 			cell3.textContent=classArray[i].teacher;
 			cell4.textContent=classArray[i].tpc;
 			cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-			if(classArray[i].selected==false){
-				var selectButton=document.createElement("button");
+			var selectButton=document.createElement("button");
+			if(classArray[i].selected==false)
 				selectButton.innerHTML="选课";
-				selectButton.onclick=function(){
-					var selectInfo={
-						id:classArray[i].id
-					}
+			else
+				selectButton.innerHTML="取消选课";
+			selectButton.addEventListener('click',function(){
+				var selectInfo={
+					id:classArray[i].id
+				}
+				if(classArray[i].selected==false){
 					var url="/api/course/select";
 					fetch(url,{
 						method:"POST",
@@ -146,27 +149,16 @@ function selectQuery(){
 							alert("选课成功！");
 							classArray[i].selected=true;
 							classArray[i].selectedCount++;
-							selectButton.innerHTML="取消选课";
-							var selectButtonCopy=selectButton.cloneNode(true);
 							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].querySelector('button').innerHTML="取消选课";
 						}
 						else
 							alert(result.msg);
 					}).catch(function(error){
 						console.log(error);
 					});
-				};
-				cell6.appendChild(selectButton);
-			}
-			else{
-				var selectButton=document.createElement("button");
-				selectButton.innerHTML="取消选课";
-				selectButton.onclick=function(){
-					var selectInfo={
-						id:classArray[i].id
-					}
+				}
+				else{
 					var url="/api/course/delete";
 					fetch(url,{
 						method:"DELETE",
@@ -182,20 +174,17 @@ function selectQuery(){
 							alert("取消成功！");
 							classArray[i].selected=false;
 							classArray[i].selectedCount--;
-							selectButton.innerHTML="选课";
-							var selectButtonCopy=selectButton.cloneNode(true);
 							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
+							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].querySelector('button').innerHTML="选课";
 						}
 						else
 							alert(result.msg);
 					}).catch(function(error){
 						console.log(error);
 					});
-				};
-				cell6.appendChild(selectButton);
-			}
+				}
+			});
+			cell6.appendChild(selectButton);
 			row.appendChild(cell1);
 			row.appendChild(cell2);
 			row.appendChild(cell3);
@@ -219,134 +208,123 @@ function selectLastPage(){
 	}
 	pageNow--;
 	var oldTable=document.getElementById("showSelect");
-		oldTable.innerHTML="";
-		var table=document.createElement("table");
-		var thead=document.createElement("thead");
-		var headerRow=document.createElement("tr");
-		var th1=document.createElement("th");
-		var th2=document.createElement("th");
-		var th3=document.createElement("th");
-		var th4=document.createElement("th");
-		var th5=document.createElement("th");
-		var th6=document.createElement("th");
-		th1.style.width="30%";
-		th2.style.width="10%";
-		th3.style.width="10%";
-		th4.style.width="30%";
-		th5.style.width="10%";
-		th6.style.width="10%";
-		th1.textContent="课程";
-		th2.textContent="开课单位";
-		th3.textContent="授课教师";
-		th4.textContent="时间地点";
-		th5.textContent="已选人数";
-		th6.textContent="";
-		headerRow.appendChild(th1);
-		headerRow.appendChild(th2);
-		headerRow.appendChild(th3);
-		headerRow.appendChild(th4);
-		headerRow.appendChild(th5);
-		headerRow.appendChild(th6);
-		thead.appendChild(headerRow);
-		table.appendChild(thead);
-		var tbody=document.createElement("tbody");
-		for(let i=25*(pageNow-1);i<Math.min(classArray.length,25*pageNow);i++){
-			var row=document.createElement("tr");
-			var cell1=document.createElement("td");
-			var cell2=document.createElement("td");
-			var cell3=document.createElement("td");
-			var cell4=document.createElement("td");
-			var cell5=document.createElement("td");
-			var cell6=document.createElement("td");
-			cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-			cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-			cell3.textContent=classArray[i].teacher;
-			cell4.textContent=classArray[i].tpc;
-			cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+	oldTable.innerHTML="";
+	var table=document.createElement("table");
+	var thead=document.createElement("thead");
+	var headerRow=document.createElement("tr");
+	var th1=document.createElement("th");
+	var th2=document.createElement("th");
+	var th3=document.createElement("th");
+	var th4=document.createElement("th");
+	var th5=document.createElement("th");
+	var th6=document.createElement("th");
+	th1.style.width="30%";
+	th2.style.width="10%";
+	th3.style.width="10%";
+	th4.style.width="30%";
+	th5.style.width="10%";
+	th6.style.width="10%";
+	th1.textContent="课程";
+	th2.textContent="开课单位";
+	th3.textContent="授课教师";
+	th4.textContent="时间地点";
+	th5.textContent="已选人数";
+	th6.textContent="";
+	headerRow.appendChild(th1);
+	headerRow.appendChild(th2);
+	headerRow.appendChild(th3);
+	headerRow.appendChild(th4);
+	headerRow.appendChild(th5);
+	headerRow.appendChild(th6);
+	thead.appendChild(headerRow);
+	table.appendChild(thead);
+	var tbody=document.createElement("tbody");
+	for(let i=25*(pageNow-1);i<Math.min(classArray.length,25*pageNow);i++){
+		var row=document.createElement("tr");
+		var cell1=document.createElement("td");
+		var cell2=document.createElement("td");
+		var cell3=document.createElement("td");
+		var cell4=document.createElement("td");
+		var cell5=document.createElement("td");
+		var cell6=document.createElement("td");
+		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
+		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
+		cell3.textContent=classArray[i].teacher;
+		cell4.textContent=classArray[i].tpc;
+		cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+		var selectButton=document.createElement("button");
+		if(classArray[i].selected==false)
+			selectButton.innerHTML="选课";
+		else
+			selectButton.innerHTML="取消选课";
+		selectButton.addEventListener('click',function(){
+			var selectInfo={
+				id:classArray[i].id
+			}
 			if(classArray[i].selected==false){
-				var selectButton=document.createElement("button");
-				selectButton.innerHTML="选课";
-				selectButton.onclick=function(){
-					var selectInfo={
-						id:classArray[i].id
+				var url="/api/course/select";
+				fetch(url,{
+					method:"POST",
+					headers:{
+						"Content-Type":"application/json",
+					},
+					mode:"cors",
+					body:JSON.stringify(selectInfo)
+				}).then(function(response){
+					return response.json();
+				}).then(function(result){
+					if(result.code==200){
+						alert("选课成功！");
+						classArray[i].selected=true;
+						classArray[i].selectedCount++;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].querySelector('button').innerHTML="取消选课";
 					}
-					var url="/api/course/select";
-					fetch(url,{
-						method:"POST",
-						headers:{
-							"Content-Type":"application/json",
-						},
-						mode:"cors",
-						body:JSON.stringify(selectInfo)
-					}).then(function(response){
-						return response.json();
-					}).then(function(result){
-						if(result.code==200){
-							alert("选课成功！");
-							classArray[i].selected=true;
-							classArray[i].selectedCount++;
-							selectButton.innerHTML="取消选课";
-							var selectButtonCopy=selectButton.cloneNode(true);
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
-						}
-						else
-							alert(result.msg);
-					}).catch(function(error){
-						console.log(error);
-					});
-				};
-				cell6.appendChild(selectButton);
+					else
+						alert(result.msg);
+				}).catch(function(error){
+					console.log(error);
+				});
 			}
 			else{
-				var selectButton=document.createElement("button");
-				selectButton.innerHTML="取消选课";
-				selectButton.onclick=function(){
-					var selectInfo={
-						id:classArray[i].id
+				var url="/api/course/delete";
+				fetch(url,{
+					method:"DELETE",
+					headers:{
+						"Content-Type":"application/json",
+					},
+					mode:"cors",
+					body:JSON.stringify(selectInfo)
+				}).then(function(response){
+					return response.json();
+				}).then(function(result){
+					if(result.code==200){
+						alert("取消成功！");
+						classArray[i].selected=false;
+						classArray[i].selectedCount--;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].querySelector('button').innerHTML="选课";
 					}
-					var url="/api/course/delete";
-					fetch(url,{
-						method:"DELETE",
-						headers:{
-							"Content-Type":"application/json",
-						},
-						mode:"cors",
-						body:JSON.stringify(selectInfo)
-					}).then(function(response){
-						return response.json();
-					}).then(function(result){
-						if(result.code==200){
-							alert("取消成功！");
-							classArray[i].selected=false;
-							classArray[i].selectedCount--;
-							selectButton.innerHTML="选课";
-							var selectButtonCopy=selectButton.cloneNode(true);
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
-						}
-						else
-							alert(result.msg);
-					}).catch(function(error){
-						console.log(error);
-					});
-				};
-				cell6.appendChild(selectButton);
+					else
+						alert(result.msg);
+				}).catch(function(error){
+					console.log(error);
+				});
 			}
-			row.appendChild(cell1);
-			row.appendChild(cell2);
-			row.appendChild(cell3);
-			row.appendChild(cell4);
-			row.appendChild(cell5);
-			row.appendChild(cell6);
-			tbody.appendChild(row);
-		}
-		table.appendChild(tbody);
-		document.getElementById("showSelect").appendChild(table);
-		var pageShow=document.getElementById("pageNumForSelect");
-		pageShow.textContent=pageNow+'/'+pageTotal;
+		});
+		cell6.appendChild(selectButton);
+		row.appendChild(cell1);
+		row.appendChild(cell2);
+		row.appendChild(cell3);
+		row.appendChild(cell4);
+		row.appendChild(cell5);
+		row.appendChild(cell6);
+		tbody.appendChild(row);
+	}
+	table.appendChild(tbody);
+	document.getElementById("showSelect").appendChild(table);
+	var pageShow=document.getElementById("pageNumForSelect");
+	pageShow.textContent=pageNow+'/'+pageTotal;
 }
 function selectNextPage(){
 	if(pageNow>=pageTotal){
@@ -355,134 +333,123 @@ function selectNextPage(){
 	}
 	pageNow++;
 	var oldTable=document.getElementById("showSelect");
-		oldTable.innerHTML="";
-		var table=document.createElement("table");
-		var thead=document.createElement("thead");
-		var headerRow=document.createElement("tr");
-		var th1=document.createElement("th");
-		var th2=document.createElement("th");
-		var th3=document.createElement("th");
-		var th4=document.createElement("th");
-		var th5=document.createElement("th");
-		var th6=document.createElement("th");
-		th1.style.width="30%";
-		th2.style.width="10%";
-		th3.style.width="10%";
-		th4.style.width="30%";
-		th5.style.width="10%";
-		th6.style.width="10%";
-		th1.textContent="课程";
-		th2.textContent="开课单位";
-		th3.textContent="授课教师";
-		th4.textContent="时间地点";
-		th5.textContent="已选人数";
-		th6.textContent="";
-		headerRow.appendChild(th1);
-		headerRow.appendChild(th2);
-		headerRow.appendChild(th3);
-		headerRow.appendChild(th4);
-		headerRow.appendChild(th5);
-		headerRow.appendChild(th6);
-		thead.appendChild(headerRow);
-		table.appendChild(thead);
-		var tbody=document.createElement("tbody");
-		for(let i=25*(pageNow-1);i<Math.min(classArray.length,25*pageNow);i++){
-			var row=document.createElement("tr");
-			var cell1=document.createElement("td");
-			var cell2=document.createElement("td");
-			var cell3=document.createElement("td");
-			var cell4=document.createElement("td");
-			var cell5=document.createElement("td");
-			var cell6=document.createElement("td");
-			cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
-			cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
-			cell3.textContent=classArray[i].teacher;
-			cell4.textContent=classArray[i].tpc;
-			cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+	oldTable.innerHTML="";
+	var table=document.createElement("table");
+	var thead=document.createElement("thead");
+	var headerRow=document.createElement("tr");
+	var th1=document.createElement("th");
+	var th2=document.createElement("th");
+	var th3=document.createElement("th");
+	var th4=document.createElement("th");
+	var th5=document.createElement("th");
+	var th6=document.createElement("th");
+	th1.style.width="30%";
+	th2.style.width="10%";
+	th3.style.width="10%";
+	th4.style.width="30%";
+	th5.style.width="10%";
+	th6.style.width="10%";
+	th1.textContent="课程";
+	th2.textContent="开课单位";
+	th3.textContent="授课教师";
+	th4.textContent="时间地点";
+	th5.textContent="已选人数";
+	th6.textContent="";
+	headerRow.appendChild(th1);
+	headerRow.appendChild(th2);
+	headerRow.appendChild(th3);
+	headerRow.appendChild(th4);
+	headerRow.appendChild(th5);
+	headerRow.appendChild(th6);
+	thead.appendChild(headerRow);
+	table.appendChild(thead);
+	var tbody=document.createElement("tbody");
+	for(let i=25*(pageNow-1);i<Math.min(classArray.length,25*pageNow);i++){
+		var row=document.createElement("tr");
+		var cell1=document.createElement("td");
+		var cell2=document.createElement("td");
+		var cell3=document.createElement("td");
+		var cell4=document.createElement("td");
+		var cell5=document.createElement("td");
+		var cell6=document.createElement("td");
+		cell1.textContent=classArray[i].code+"\n"+classArray[i].name+"\n"+classArray[i].credits+"学分 "+classArray[i].period+"学时 "+classArray[i].education+" "+classArray[i].courseType+" "+classArray[i].classType+" "+classArray[i].teachLang+" "+classArray[i].examMode+" "+classArray[i].gradation;
+		cell2.textContent=classArray[i].departmentCode+"\n"+classArray[i].departmentName;
+		cell3.textContent=classArray[i].teacher;
+		cell4.textContent=classArray[i].tpc;
+		cell5.textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+		var selectButton=document.createElement("button");
+		if(classArray[i].selected==false)
+			selectButton.innerHTML="选课";
+		else
+			selectButton.innerHTML="取消选课";
+		selectButton.addEventListener('click',function(){
+			var selectInfo={
+				id:classArray[i].id
+			}
 			if(classArray[i].selected==false){
-				var selectButton=document.createElement("button");
-				selectButton.innerHTML="选课";
-				selectButton.onclick=function(){
-					var selectInfo={
-						id:classArray[i].id
+				var url="/api/course/select";
+				fetch(url,{
+					method:"POST",
+					headers:{
+						"Content-Type":"application/json",
+					},
+					mode:"cors",
+					body:JSON.stringify(selectInfo)
+				}).then(function(response){
+					return response.json();
+				}).then(function(result){
+					if(result.code==200){
+						alert("选课成功！");
+						classArray[i].selected=true;
+						classArray[i].selectedCount++;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].querySelector('button').innerHTML="取消选课";
 					}
-					var url="/api/course/select";
-					fetch(url,{
-						method:"POST",
-						headers:{
-							"Content-Type":"application/json",
-						},
-						mode:"cors",
-						body:JSON.stringify(selectInfo)
-					}).then(function(response){
-						return response.json();
-					}).then(function(result){
-						if(result.code==200){
-							alert("选课成功！");
-							classArray[i].selected=true;
-							classArray[i].selectedCount++;
-							selectButton.innerHTML="取消选课";
-							var selectButtonCopy=selectButton.cloneNode(true);
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
-						}
-						else
-							alert(result.msg);
-					}).catch(function(error){
-						console.log(error);
-					});
-				};
-				cell6.appendChild(selectButton);
+					else
+						alert(result.msg);
+				}).catch(function(error){
+					console.log(error);
+				});
 			}
 			else{
-				var selectButton=document.createElement("button");
-				selectButton.innerHTML="取消选课";
-				selectButton.onclick=function(){
-					var selectInfo={
-						id:classArray[i].id
+				var url="/api/course/delete";
+				fetch(url,{
+					method:"DELETE",
+					headers:{
+						"Content-Type":"application/json",
+					},
+					mode:"cors",
+					body:JSON.stringify(selectInfo)
+				}).then(function(response){
+					return response.json();
+				}).then(function(result){
+					if(result.code==200){
+						alert("取消成功！");
+						classArray[i].selected=false;
+						classArray[i].selectedCount--;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
+						document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].querySelector('button').innerHTML="选课";
 					}
-					var url="/api/course/delete";
-					fetch(url,{
-						method:"DELETE",
-						headers:{
-							"Content-Type":"application/json",
-						},
-						mode:"cors",
-						body:JSON.stringify(selectInfo)
-					}).then(function(response){
-						return response.json();
-					}).then(function(result){
-						if(result.code==200){
-							alert("取消成功！");
-							classArray[i].selected=false;
-							classArray[i].selectedCount--;
-							selectButton.innerHTML="选课";
-							var selectButtonCopy=selectButton.cloneNode(true);
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[4].textContent=classArray[i].selectedCount+"/"+classArray[i].limitCount;
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].innerHTML="";
-							document.getElementById("showSelect").querySelector("table").rows[i-25*(pageNow-1)+1].cells[5].appendChild(selectButtonCopy);
-						}
-						else
-							alert(result.msg);
-					}).catch(function(error){
-						console.log(error);
-					});
-				};
-				cell6.appendChild(selectButton);
+					else
+						alert(result.msg);
+				}).catch(function(error){
+					console.log(error);
+				});
 			}
-			row.appendChild(cell1);
-			row.appendChild(cell2);
-			row.appendChild(cell3);
-			row.appendChild(cell4);
-			row.appendChild(cell5);
-			row.appendChild(cell6);
-			tbody.appendChild(row);
-		}
-		table.appendChild(tbody);
-		document.getElementById("showSelect").appendChild(table);
-		var pageShow=document.getElementById("pageNumForSelect");
-		pageShow.textContent=pageNow+'/'+pageTotal;
+		});
+		cell6.appendChild(selectButton);
+		row.appendChild(cell1);
+		row.appendChild(cell2);
+		row.appendChild(cell3);
+		row.appendChild(cell4);
+		row.appendChild(cell5);
+		row.appendChild(cell6);
+		tbody.appendChild(row);
+	}
+	table.appendChild(tbody);
+	document.getElementById("showSelect").appendChild(table);
+	var pageShow=document.getElementById("pageNumForSelect");
+	pageShow.textContent=pageNow+'/'+pageTotal;
 }
 function query(){
 	classArray=[];
