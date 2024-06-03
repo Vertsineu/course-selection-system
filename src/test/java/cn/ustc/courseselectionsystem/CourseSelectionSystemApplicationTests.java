@@ -1,5 +1,6 @@
 package cn.ustc.courseselectionsystem;
 
+import cn.ustc.courseselectionsystem.mapper.CourseSelectMapper;
 import cn.ustc.courseselectionsystem.mapper.QueryClassMapper;
 import cn.ustc.courseselectionsystem.mapper.QueryStudentMapper;
 import cn.ustc.courseselectionsystem.mapper.StudentLoginMapper;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -25,6 +27,8 @@ class CourseSelectionSystemApplicationTests {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private QueryStudentMapper queryStudentMapper;
+    @Autowired
+    private CourseSelectMapper courseSelectMapper;
 
     @Test
     void addUser() {
@@ -66,6 +70,28 @@ class CourseSelectionSystemApplicationTests {
     void testQueryStudentInfoByNumber() {
         StudentInfoPO studentLoginPO = queryStudentMapper.queryStudentInfoByNumber("PB23010010");
         System.out.println("studentLoginPO = " + studentLoginPO);
+    }
+
+    @Test
+    void testQueryLimitCountById() {
+        int limitCount = courseSelectMapper.queryLimitCountById(21);
+        System.out.println("limitCount = " + limitCount);
+    }
+
+    @Test
+    void testStreamType() {
+        List<ClassPO> classList = courseSelectMapper.queryCheckedClass(1);
+        classList.stream().map(ClassPO::getId).flatMap(classId -> {
+            List<TpcPO> tpcPOS = queryClassMapper.queryTpcByClassId(classId);
+            return tpcPOS.stream();
+        }).forEach(System.out::println);
+    }
+
+    @Test
+    void testStream() {
+        int end = 4;
+        int start = 1;
+        Arrays.stream(new int[end - start + 1]).map(i -> start + i).forEach(System.out::println);
     }
 
 }

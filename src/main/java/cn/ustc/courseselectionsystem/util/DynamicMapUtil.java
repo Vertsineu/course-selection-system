@@ -12,10 +12,8 @@ import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -35,12 +33,14 @@ public class DynamicMapUtil {
             CoursePO coursePO = queryClassMapper.queryCourseById(classPO.getCourseId());
             DepartmentPO department = queryClassMapper.queryDepartmentById(classPO.getDepartmentId());
             List<TeacherPO> teacherList = queryClassMapper.queryTeacherByClassId(classPO.getId());
-            String teachers = teacherList.stream().map(TeacherPO::getName).reduce((s1, s2) -> s1 + ',' + s2).orElse("");
+            String teachers = teacherList.stream()
+                    .map(TeacherPO::getName)
+                    .reduce(this::teachersReduce).orElse("");
 
             List<TpcPO> tpcList = queryClassMapper.queryTpcByClassId(classPO.getId());
             String tpc = tpcList.stream()
-                    .map(tpcPO -> tpcPO.getTimeWeek() + ' ' + tpcPO.getPlace() + ' ' + ':' + tpcPO.getTimeDay() + '(' + tpcPO.getTimePeriod() + ')' + ' ' + queryClassMapper.queryTeacherById(tpcPO.getTeacherId()).getName())
-                    .reduce((s1, s2) -> s1 + '\n' + s2).orElse("");
+                    .map(this::tpcFormat)
+                    .reduce(this::tpcStrReduce).orElse("");
 
             // 添加进 courseWithClassMap
             if (!courseWithClassMap.containsKey(coursePO))
@@ -67,5 +67,100 @@ public class DynamicMapUtil {
         });
 
         return new CourseWithClassListVO(courseVOList);
+    }
+
+    private String teachersReduce(String t1, String t2) {
+        return t1 + ',' + t2;
+    }
+
+    private String tpcFormat(TpcPO tpcPO) {
+        return tpcPO.getTimeWeek()
+                .replaceAll("-", "~")
+                .replaceAll("\\(0\\)", "(双)")
+                .replaceAll("\\(1\\)", "(单)") +
+                '周' +
+                ' ' +
+                tpcPO.getPlace() +
+                ' ' +
+                ':' +
+                tpcPO.getTimeDay() +
+                '(' +
+                tpcPO.getTimePeriod() +
+                ')' +
+                ' ' +
+                queryClassMapper.queryTeacherById(tpcPO.getTeacherId()).getName();
+    }
+
+    private String tpcStrReduce(String tpc1, String tpc2) {
+        return tpc1 + '\n' + tpc2;
+    }
+
+    public Set<Integer> mapToTimeSet(List<TpcPO> tpcList) {
+        // 所有已选时间
+        Set<Integer> timeSet = new HashSet<>();
+
+        // 判断时间是否冲突
+        tpcList.forEach(tpcPO -> {
+            // 获取时间
+            String timeWeek = tpcPO.getTimeWeek();
+            String timeDay = tpcPO.getTimeDay();
+            String timePeriod = tpcPO.getTimePeriod();
+
+            // 解析 week
+            Set<Integer> weekSet = new HashSet<>();
+
+            Arrays.stream(timeWeek.split(",")).forEach(week -> {
+                if (week.endsWith("(0)")) {
+                    week = week.replace("(0)", "");
+                    if (!week.contains("-"))
+                        weekSet.add(Integer.parseInt(week));
+                    else {
+                        var split = week.split("-");
+                        int start = Integer.parseInt(split[0]);
+                        int end = Integer.parseInt(split[1]);
+                        for (int i = start + start % 2; i < end; i++)
+                            weekSet.add(i);
+                    }
+                } else if (week.endsWith("(1)")) {
+                    week = week.replace("(1)", "");
+                    if (!week.contains("-"))
+                        weekSet.add(Integer.parseInt(week));
+                    else {
+                        var split = week.split("-");
+                        int start = Integer.parseInt(split[0]);
+                        int end = Integer.parseInt(split[1]);
+                        for (int i = start + 1 - start % 2; i < end; i++)
+                            weekSet.add(i);
+                    }
+                } else {
+                    if (!week.contains("-"))
+                        weekSet.add(Integer.parseInt(week));
+                    else {
+                        var split = week.split("-");
+                        int start = Integer.parseInt(split[0]);
+                        int end = Integer.parseInt(split[1]);
+                        for (int i = start; i <= end; i++)
+                            weekSet.add(i);
+                    }
+                }
+            });
+
+            // 解析 day
+            int day = Integer.parseInt(timeDay);
+
+            // 解析 period
+            Set<Integer> periodSet = Arrays.stream(timePeriod.split(","))
+                    .filter(str -> str.matches("\\d+"))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toSet());
+
+            // 添加进 selectedTimeSet，格式为 (week - 1) * 13 * 7 + (day - 1) * 13 + (period - 1)
+            weekSet.forEach(week ->
+                    periodSet.forEach(period ->
+                            timeSet.add((week - 1) * 13 * 7 + (day - 1) * 13 + (period - 1))));
+
+        });
+
+        return timeSet;
     }
 }

@@ -49,6 +49,13 @@ public interface CourseSelectMapper {
     int querySelectedCountById(Integer classId);
 
     @Select("""
+            select limit_count
+            from tbl_class
+            where id = #{classId}
+            """)
+    int queryLimitCountById(Integer classId);
+
+    @Select("""
             select count(*)
             from tbl_student_class
             where student_id = #{studentId} and class_id = #{classId}
