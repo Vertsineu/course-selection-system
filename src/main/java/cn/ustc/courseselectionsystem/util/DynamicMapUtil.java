@@ -96,8 +96,8 @@ public class DynamicMapUtil {
     }
 
     public Set<Integer> mapToTimeSet(List<TpcPO> tpcList) {
-        // 所有已选时间
-        Set<Integer> timeSet = new HashSet<>();
+        // 所有时间
+        Set<Integer> timeSet = new TreeSet<>();
 
         // 判断时间是否冲突
         tpcList.forEach(tpcPO -> {

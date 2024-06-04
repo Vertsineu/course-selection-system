@@ -2,6 +2,7 @@ package cn.ustc.courseselectionsystem.controller;
 
 import cn.ustc.courseselectionsystem.model.vo.ClassVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
+import cn.ustc.courseselectionsystem.model.vo.TimeSetVO;
 import cn.ustc.courseselectionsystem.rsp.None;
 import cn.ustc.courseselectionsystem.rsp.R;
 import cn.ustc.courseselectionsystem.rsp.RUtils;
@@ -17,6 +18,11 @@ public class CourseSelectController {
 
     private final CourseSelectService courseSelectService;
     private final TokenUtil tokenUtil;
+
+    @GetMapping("/timeSet")
+    public R<TimeSetVO> timeSet(@CookieValue("token") String token) {
+        return RUtils.success(courseSelectService.selectedClassesTimeSet(tokenUtil.parseToken(token).get("username")));
+    }
 
     /**
      * 获取所有已选课程
