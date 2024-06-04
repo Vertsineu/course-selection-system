@@ -14,15 +14,33 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 查询服务实现类
+ */
 @Service
 @RequiredArgsConstructor
 public class QueryServiceImpl implements QueryService {
 
+    /**
+     * 查询课程数据库相关操作类
+     */
     private final QueryClassMapper queryClassMapper;
+    /**
+     * 查询学生数据库相关操作类
+     */
     private final QueryStudentMapper queryStudentMapper;
 
+    /**
+     * 动态工具类
+     */
     private final DynamicMapUtil dynamicMapUtil;
 
+    /**
+     * 查询课程
+     * @param queryClassParam 查询课程参数
+     * @param username 学生学号
+     * @return 课程列表
+     */
     @Transactional(readOnly = true)
     @Override
     public CourseWithClassListVO forClass(QueryClassParam queryClassParam, String username) {
@@ -30,6 +48,11 @@ public class QueryServiceImpl implements QueryService {
         return dynamicMapUtil.mapToCourseWithClassListVO(queryClassMapper.queryClassByParam(param), username);
     }
 
+    /**
+     * 查询学生信息
+     * @param username 学生学号
+     * @return 学生信息
+     */
     @Transactional(readOnly = true)
     @Override
     public StudentInfoVO forStudentInfo(String username) {

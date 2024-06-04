@@ -7,6 +7,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * 项目启动类
+ */
 @SpringBootApplication
 @MapperScan(basePackages = "cn.ustc.courseselectionsystem.mapper")
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)

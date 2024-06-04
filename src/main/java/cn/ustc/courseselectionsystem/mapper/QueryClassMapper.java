@@ -7,9 +7,17 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+/**
+ * 查询课程相关的数据库操作
+ */
 @Mapper
 public interface QueryClassMapper {
 
+    /**
+     * 查询课程
+     * @param param 查询参数
+     * @return 课程列表
+     */
     @SelectProvider(type = SqlProvider.class, method = "queryClassByParam")
     @Results(id = "classMap", value = {
         @Result(property = "id", column = "id", id = true),
@@ -26,6 +34,11 @@ public interface QueryClassMapper {
     })
     List<ClassPO> queryClassByParam(QueryClassMapperParam param);
 
+    /**
+     * 查询课程
+     * @param id 课程id
+     * @return 课程
+     */
     @Select("""
            select id, code, name_cn, category_cn , classify_cn , gradation_cn , type_cn , credits, education_cn, period_total
            from tbl_course
@@ -45,6 +58,11 @@ public interface QueryClassMapper {
     })
     CoursePO queryCourseById(Integer id);
 
+    /**
+     * 查询部门
+     * @param id 部门id
+     * @return 部门
+     */
     @Select("""
             select id, code, name_cn, college
             from tbl_department
@@ -58,6 +76,11 @@ public interface QueryClassMapper {
     })
     DepartmentPO queryDepartmentById(Integer id);
 
+    /**
+     * 查询时间地点人物
+     * @param classId 课程id
+     * @return 时间地点人物
+     */
     @Select("""
             select class_id, time_week, time_day, time_period, place, teacher_id
             from tbl_tpc
@@ -73,6 +96,11 @@ public interface QueryClassMapper {
     })
     List<TpcPO> queryTpcByClassId(Integer classId);
 
+    /**
+     * 查询教师
+     * @param classId 课程id
+     * @return 教师
+     */
     @Select("""
             select tc.teacher_id, t.department_id, t.name_cn
             from tbl_teacher_class tc
@@ -86,12 +114,17 @@ public interface QueryClassMapper {
     })
     List<TeacherPO> queryTeacherByClassId(Integer classId);
 
+    /**
+     * 查询教师
+     * @param teacherId 教师id
+     * @return 教师
+     */
     @Select("""
             select id, department_id, name_cn
             from tbl_teacher
             where id = #{id}
             """)
     @ResultMap("teacherMap")
-    TeacherPO queryTeacherById(Integer id);
+    TeacherPO queryTeacherById(Integer teacherId);
 
 }

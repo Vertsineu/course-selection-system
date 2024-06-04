@@ -11,12 +11,24 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Token工具类
+ */
 @Component
 public class TokenUtil {
 
+    /**
+     * 私钥
+     */
     @Value("${token.secretKey}")
     private String secretKey;
 
+    /**
+     * 创建Token
+     * @param username 用户名
+     * @param password 密码
+     * @return Token
+     */
     public String createToken(String username, String password) {
         return JWT.create()
                 .withClaim("username", username)
@@ -25,6 +37,11 @@ public class TokenUtil {
                 .sign(Algorithm.HMAC256(secretKey));
     }
 
+    /**
+     * 解析Token
+     * @param token Token
+     * @return Token信息
+     */
     public Map<String, String> parseToken(String token) {
         try {
             HashMap<String, String> map = new HashMap<>();

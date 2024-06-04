@@ -14,14 +14,28 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+/**
+ * 学生认证服务实现类
+ */
 @Service
 @RequiredArgsConstructor
 public class StudentDetailsServiceImpl implements StudentDetailsService {
 
+    /**
+     * 认证管理器
+     */
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Token工具类
+     */
     private final TokenUtil tokenUtil;
 
+    /**
+     * 学生登录
+     * @param studentLoginRequestVO 学生登录请求
+     * @return 学生登录响应
+     */
     public StudentLoginResponseVO login(StudentLoginRequestVO studentLoginRequestVO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(studentLoginRequestVO.getUsername(), studentLoginRequestVO.getPassword());
 

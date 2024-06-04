@@ -15,7 +15,15 @@ import cn.ustc.courseselectionsystem.model.vo.StudentInfoVO;
 
 import java.util.List;
 
+/**
+ * 静态映射工具类
+ */
 public class MapUtil {
+    /**
+     * 将查询课程参数映射为查询课程映射参数
+     * @param queryClassParam 查询课程参数
+     * @return 查询课程映射参数
+     */
     public static QueryClassMapperParam mapToQueryClassMapperParam(QueryClassParam queryClassParam) {
         QueryClassMapperParam queryClassMapperParam = new QueryClassMapperParam();
         queryClassMapperParam.setDepartmentCode(queryClassParam.getDepartmentCode());
@@ -25,6 +33,11 @@ public class MapUtil {
         return queryClassMapperParam;
     }
 
+    /**
+     * 将部门持久化对象映射为部门值对象
+     * @param departmentPO 部门持久化对象
+     * @return 部门值对象
+     */
     public static DepartmentVO mapToDepartmentPO(DepartmentPO departmentPO) {
         DepartmentVO departmentVO = new DepartmentVO();
         departmentVO.setId(departmentPO.getId());
@@ -34,6 +47,13 @@ public class MapUtil {
         return departmentVO;
     }
 
+    /**
+     * 将课堂持久化对象映射为课堂值对象
+     * @param classPO 课堂持久化对象
+     * @param tuple 部门，教师，时间地点人物类
+     * @param selectStateTuple 选课状态类
+     * @return 课堂值对象
+     */
     public static ClassVO mapToClassVO(ClassPO classPO, DepartmentTeachersTpcTuple tuple, SelectStateTuple selectStateTuple) {
         ClassVO classVO = new ClassVO();
         classVO.setId(classPO.getId());
@@ -55,6 +75,12 @@ public class MapUtil {
         return classVO;
     }
 
+    /**
+     * 将课程持久化对象映射为课程值对象
+     * @param coursePO 课程持久化对象
+     * @param classVOList 课堂值对象列表
+     * @return 课程值对象
+     */
     public static CourseVO mapToCourseVO(CoursePO coursePO, List<ClassVO> classVOList) {
         CourseVO courseVO = new CourseVO();
         courseVO.setId(coursePO.getId());
@@ -71,6 +97,11 @@ public class MapUtil {
         return courseVO;
     }
 
+    /**
+     * 将学生持久化对象映射为学生值对象
+     * @param studentInfoPO 学生持久化对象
+     * @return 学生值对象
+     */
     public static StudentInfoVO mapToStudentInfoVO(StudentInfoPO studentInfoPO) {
         StudentInfoVO studentInfoVO = new StudentInfoVO();
         studentInfoVO.setId(studentInfoPO.getId());

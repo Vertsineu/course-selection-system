@@ -15,14 +15,32 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * 动态映射工具类
+ */
 @Component
 @RequiredArgsConstructor
 public class DynamicMapUtil {
 
+    /**
+     * 查询课程数据库相关操作类
+     */
     private final QueryClassMapper queryClassMapper;
+    /**
+     * 选课数据库相关操作类
+     */
     private final CourseSelectMapper courseSelectMapper;
+    /**
+     * 查询学生数据库相关操作类
+     */
     private final QueryStudentMapper queryStudentMapper;
 
+    /**
+     * 将课堂信息映射为课程（包含课堂）信息
+     * @param classList 课堂列表
+     * @param username 学生学号
+     * @return 课程（包含课堂）信息
+     */
     public CourseWithClassListVO mapToCourseWithClassListVO(List<ClassPO> classList, String username) {
         // 将课堂信息存储到 map 中
         Map<CoursePO, List<ClassPO>> courseWithClassMap = new HashMap<>();
@@ -95,6 +113,11 @@ public class DynamicMapUtil {
         return tpc1 + '\n' + tpc2;
     }
 
+    /**
+     * 将时间地点人物映射为时间集合
+     * @param tpcList 时间地点人物列表
+     * @return 时间集合
+     */
     public Set<Integer> mapToTimeSet(List<TpcPO> tpcList) {
         // 所有时间
         Set<Integer> timeSet = new TreeSet<>();

@@ -9,7 +9,7 @@ import cn.ustc.courseselectionsystem.model.po.ClassPO;
 import cn.ustc.courseselectionsystem.model.po.TpcPO;
 import cn.ustc.courseselectionsystem.model.vo.CourseVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
-import cn.ustc.courseselectionsystem.model.vo.TimeCourseMapVO;
+import cn.ustc.courseselectionsystem.model.vo.TimeCourseListVO;
 import cn.ustc.courseselectionsystem.service.CourseSelectService;
 import cn.ustc.courseselectionsystem.util.DynamicMapUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+/**
+ * 选课服务实现类
+ */
 @Service
 @RequiredArgsConstructor
 public class CourseSelectServiceImpl implements CourseSelectService {
 
+    /**
+     * 选课数据库相关操作类
+     */
     private final CourseSelectMapper courseSelectMapper;
+    /**
+     * 查询学生数据库相关操作类
+     */
     private final QueryStudentMapper queryStudentMapper;
 
+    /**
+     * 动态工具类
+     */
     private final DynamicMapUtil dynamicMapUtil;
+    /**
+     * 查询课程数据库相关操作类
+     */
     private final QueryClassMapper queryClassMapper;
 
     /**
@@ -115,8 +130,13 @@ public class CourseSelectServiceImpl implements CourseSelectService {
             throw new DeleteClassException("删除课程失败");
     }
 
+    /**
+     * 查询学生已选课程的时间-课程映射列表
+     * @param username 学生学号
+     * @return 学生已选课程的时间-课程映射列表
+     */
     @Override
-    public TimeCourseMapVO timeSelectedCourseMap(String username) {
+    public TimeCourseListVO timeSelectedCourseList(String username) {
         Integer studentId = queryStudentMapper.queryStudentInfoByNumber(username).getId();
 
         TreeMap<Integer, CourseVO> timeCourseMap = new TreeMap<>();
@@ -132,6 +152,10 @@ public class CourseSelectServiceImpl implements CourseSelectService {
                     timeCourseMap.put(time, courseVO));
         });
 
-        return new TimeCourseMapVO(timeCourseMap);
+        List<CourseVO> timeCourseList = new ArrayList<>();
+        for (int i = 0; i < 20 * 13 * 7; i++)
+            timeCourseList.add(timeCourseMap.getOrDefault(i, null));
+
+        return new TimeCourseListVO(timeCourseList);
     }
 }

@@ -23,13 +23,30 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 学生认证过滤器，通过数据库查询，判断用户密码是否正确
+ */
 @RequiredArgsConstructor
 public class StudentAuthenticationFilter extends OncePerRequestFilter {
 
+    /**
+     * 匿名登录可以访问的路径
+     */
     private final List<String> ignoreLoginPaths;
 
+    /**
+     * Token 工具类
+     */
     private final TokenUtil tokenUtil;
 
+    /**
+     * 过滤器逻辑
+     * @param request 请求
+     * @param response 响应
+     * @param filterChain 过滤器链
+     * @throws ServletException Servlet 异常
+     * @throws IOException IO 异常
+     */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         if (isFilterRequest(request)) {
@@ -64,6 +81,11 @@ public class StudentAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * 判断是否可以匿名访问
+     * @param request 请求
+     * @return 是否需要过滤
+     */
     private boolean isFilterRequest(HttpServletRequest request) {
         PathPatternParser parser = new PathPatternParser();
         String path = request.getContextPath() + request.getRequestURI();
