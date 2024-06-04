@@ -14,7 +14,7 @@ window.onload=function(){
 	fetch("/api/course/timeSet").then(function(response){
 		return response.json();
 	}).then(function(result){
-		for(let i of result.data.timeCourseList){
+		for(let course of result.data.timeCourseList){
 			var thisClass={
 				name:course.name,
 				id:course.classes[0].id,
