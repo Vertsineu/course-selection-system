@@ -15,12 +15,22 @@ window.onload=function(){
 		return response.json();
 	}).then(function(result){
 		for(let course of result.data.timeCourseList){
-			var thisClass={
-				name:course.name,
-				id:course.classes[0].id,
-				tpc:course.classes[0].tpc
+			if(course==null){
+				var thisClass={
+					name:"",
+					id:"",
+					tpc:""
+				}
+				classTable.push(thisClass);
 			}
-			classTable[i].push(thisClass);
+			else{
+				var thisClass={
+					name:course.name,
+					id:course.classes[0].id,
+					tpc:course.classes[0].tpc
+				}
+				classTable.push(thisClass);
+			}
 		}
 	}).then(function(){
 		weekNow=1;
