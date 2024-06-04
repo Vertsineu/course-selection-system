@@ -3,10 +3,10 @@ package cn.ustc.courseselectionsystem.model.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
-public class TimeSetVO {
-    private Set<Integer> timeSet;
+public class TimeCourseMapVO {
+    private Map<Integer, CourseVO> timeCourseMap;
 }

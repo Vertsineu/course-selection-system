@@ -7,8 +7,9 @@ import cn.ustc.courseselectionsystem.mapper.QueryClassMapper;
 import cn.ustc.courseselectionsystem.mapper.QueryStudentMapper;
 import cn.ustc.courseselectionsystem.model.po.ClassPO;
 import cn.ustc.courseselectionsystem.model.po.TpcPO;
+import cn.ustc.courseselectionsystem.model.vo.CourseVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
-import cn.ustc.courseselectionsystem.model.vo.TimeSetVO;
+import cn.ustc.courseselectionsystem.model.vo.TimeCourseMapVO;
 import cn.ustc.courseselectionsystem.service.CourseSelectService;
 import cn.ustc.courseselectionsystem.util.DynamicMapUtil;
 import lombok.RequiredArgsConstructor;
@@ -78,7 +79,13 @@ public class CourseSelectServiceImpl implements CourseSelectService {
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE, readOnly = true)
     protected boolean isTimeConflict(Integer classId, Integer studentId) {
         // 查询已选课程的所有时间段
-        Set<Integer> selectedTimeSet = selectedClassesTimeSet(studentId);
+        List<ClassPO> selectedClassesList = courseSelectMapper.queryCheckedClass(studentId);
+        List<TpcPO> selectedClassestpcList = selectedClassesList.stream().map(ClassPO::getId).flatMap(selectedClassId -> {
+            List<TpcPO> tpcPOS = queryClassMapper.queryTpcByClassId(selectedClassId);
+            return tpcPOS.stream();
+        }).toList();
+        Set<Integer> selectedTimeSet = dynamicMapUtil.mapToTimeSet(selectedClassestpcList);
+
         // 查询要选课程的所有时间段
         List<TpcPO> classTpcList = queryClassMapper.queryTpcByClassId(classId);
         Set<Integer> timeSet = dynamicMapUtil.mapToTimeSet(classTpcList);
@@ -109,18 +116,22 @@ public class CourseSelectServiceImpl implements CourseSelectService {
     }
 
     @Override
-    public TimeSetVO selectedClassesTimeSet(String username) {
+    public TimeCourseMapVO timeSelectedCourseMap(String username) {
         Integer studentId = queryStudentMapper.queryStudentInfoByNumber(username).getId();
 
-        return new TimeSetVO(selectedClassesTimeSet(studentId));
-    }
+        TreeMap<Integer, CourseVO> timeCourseMap = new TreeMap<>();
+        List<ClassPO> selectedClassesList = courseSelectMapper.queryCheckedClass(studentId);
+        selectedClassesList.forEach(classPO -> {
+            CourseWithClassListVO courseWithClassListVO = dynamicMapUtil.mapToCourseWithClassListVO(List.of(classPO), username);
+            CourseVO courseVO = courseWithClassListVO.getCourseList().get(0);
 
-    private Set<Integer> selectedClassesTimeSet(Integer studentId) {
-        List<ClassPO> classList = courseSelectMapper.queryCheckedClass(studentId);
-        List<TpcPO> tpcList = classList.stream().map(ClassPO::getId).flatMap(selectedClassId -> {
-            List<TpcPO> tpcPOS = queryClassMapper.queryTpcByClassId(selectedClassId);
-            return tpcPOS.stream();
-        }).toList();
-        return dynamicMapUtil.mapToTimeSet(tpcList);
+            List<TpcPO> tpcPOS = queryClassMapper.queryTpcByClassId(classPO.getId());
+            Set<Integer> timeSet = dynamicMapUtil.mapToTimeSet(tpcPOS);
+
+            timeSet.forEach(time ->
+                    timeCourseMap.put(time, courseVO));
+        });
+
+        return new TimeCourseMapVO(timeCourseMap);
     }
 }

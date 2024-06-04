@@ -2,7 +2,7 @@ package cn.ustc.courseselectionsystem.controller;
 
 import cn.ustc.courseselectionsystem.model.vo.ClassVO;
 import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
-import cn.ustc.courseselectionsystem.model.vo.TimeSetVO;
+import cn.ustc.courseselectionsystem.model.vo.TimeCourseMapVO;
 import cn.ustc.courseselectionsystem.rsp.None;
 import cn.ustc.courseselectionsystem.rsp.R;
 import cn.ustc.courseselectionsystem.rsp.RUtils;
@@ -20,8 +20,8 @@ public class CourseSelectController {
     private final TokenUtil tokenUtil;
 
     @GetMapping("/timeSet")
-    public R<TimeSetVO> timeSet(@CookieValue("token") String token) {
-        return RUtils.success(courseSelectService.selectedClassesTimeSet(tokenUtil.parseToken(token).get("username")));
+    public R<TimeCourseMapVO> timeSet(@CookieValue("token") String token) {
+        return RUtils.success(courseSelectService.timeSelectedCourseMap(tokenUtil.parseToken(token).get("username")));
     }
 
     /**

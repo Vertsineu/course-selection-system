@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        StudentLoginPO student = studentLoginMapper.queryStudentByNumber(username);
+        StudentLoginPO student = studentLoginMapper.queryStudentLoginByNumber(username);
 
         if (Objects.isNull(student)) {
             throw new UsernameNotFoundException("用户不存在");

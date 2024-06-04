@@ -1,7 +1,7 @@
 package cn.ustc.courseselectionsystem.service;
 
 import cn.ustc.courseselectionsystem.model.vo.CourseWithClassListVO;
-import cn.ustc.courseselectionsystem.model.vo.TimeSetVO;
+import cn.ustc.courseselectionsystem.model.vo.TimeCourseMapVO;
 
 public interface CourseSelectService {
     CourseWithClassListVO checkedClasses(String username);
@@ -10,5 +10,5 @@ public interface CourseSelectService {
 
     void deleteClass(Integer classId, String username);
 
-    TimeSetVO selectedClassesTimeSet(String username);
+    TimeCourseMapVO timeSelectedCourseMap(String username);
 }

@@ -18,7 +18,7 @@ public interface StudentLoginMapper {
         @Result(property = "password", column = "password"),
         @Result(property = "departmentId", column = "department_id")
     })
-    StudentLoginPO queryStudentByNumber(String number);
+    StudentLoginPO queryStudentLoginByNumber(String number);
 
     @Insert("""
             insert into tbl_student (number, name, password, department_id)
