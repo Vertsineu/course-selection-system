@@ -14,11 +14,11 @@ window.onload=function(){
 	fetch("/api/course/timeSet").then(function(response){
 		return response.json();
 	}).then(function(result){
-		for(let i=0;i<20*7*13;i++){
+		for(let course of result.data.timeCourseMap){
 			var thisClass={
-				name:result.data.timeCourseMap[i].name,
-				id:result.data.timeCourseMap[i].classes[0].id,
-				tpc:result.data.timeCourseMap[i].classes[0].tpc
+				name:course.name,
+				id:course.classes[0].id,
+				tpc:course.classes[0].tpc
 			}
 			classTable[i].push(thisClass);
 		}
