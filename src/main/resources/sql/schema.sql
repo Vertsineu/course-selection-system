@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS tbl_teacher(
 CREATE TABLE IF NOT EXISTS tbl_student(
     id              INT AUTO_INCREMENT PRIMARY KEY,
     number          VARCHAR(32) UNIQUE NOT NULL,
+    name            VARCHAR(32) NOT NULL,
     password        VARCHAR(255) NOT NULL,
     department_id   INT
 ) ENGINE= InnoDB DEFAULT CHARSET = utf8mb4;

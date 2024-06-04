@@ -75,6 +75,7 @@ public class MapUtil {
         StudentInfoVO studentInfoVO = new StudentInfoVO();
         studentInfoVO.setId(studentInfoPO.getId());
         studentInfoVO.setNumber(studentInfoPO.getNumber());
+        studentInfoVO.setName(studentInfoPO.getName());
         studentInfoVO.setDepartment(mapToDepartmentPO(studentInfoPO.getDepartment()));
         return studentInfoVO;
     }

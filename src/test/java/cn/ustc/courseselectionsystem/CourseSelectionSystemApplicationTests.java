@@ -32,11 +32,12 @@ class CourseSelectionSystemApplicationTests {
 
     @Test
     void addUser() {
-        StudentLoginPO studentLoginPO = new StudentLoginPO();
-        studentLoginPO.setNumber("username");
-        studentLoginPO.setPassword(passwordEncoder.encode("password"));
-        studentLoginPO.setDepartmentId(12);
-        Assert.isTrue(studentLoginMapper.insertStudent(studentLoginPO) == 1, "插入失败");
+        StudentRegisterPO studentRegisterPO = new StudentRegisterPO();
+        studentRegisterPO.setNumber("username");
+        studentRegisterPO.setName("张三");
+        studentRegisterPO.setPassword(passwordEncoder.encode("password"));
+        studentRegisterPO.setDepartmentId(12);
+        Assert.isTrue(studentLoginMapper.insertStudent(studentRegisterPO) == 1, "插入失败");
     }
 
     @Test
