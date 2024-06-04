@@ -7,6 +7,6 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
-public class TimeSetVo {
+public class TimeSetVO {
     private Set<Integer> timeSet;
 }
