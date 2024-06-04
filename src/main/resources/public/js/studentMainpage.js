@@ -20,7 +20,7 @@ window.onload=function(){
 		for(let day=1;day<=7;day++){
 			for(let period=1;period<=13;period++){
 				var thisClass=classTable[(weekNow-1)*7*13+(day-1)*13+(period-1)];
-				document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes.code+"\n"+thisClass.name+"\n"+thisClass.classes.tpc;
+				document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes[0].code+"\n"+thisClass.name+"\n"+thisClass.classes[0].tpc;
 			}
 		}
 		document.getElementById("weekNum").textContent="第"+weekNow+"周";
@@ -37,7 +37,7 @@ function lastWeek(){
 	for(let day=1;day<=7;day++){
 		for(let period=1;period<=13;period++){
 			var thisClass=classTable[(weekNow-1)*7*13+(day-1)*13+(period-1)];
-			document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes.code+"\n"+thisClass.name+"\n"+thisClass.classes.tpc;
+			document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes[0].code+"\n"+thisClass.name+"\n"+thisClass.classes[0].tpc;
 		}
 	}
 	document.getElementById("weekNum").textContent="第"+weekNow+"周";
@@ -51,7 +51,7 @@ function nextWeek(){
 	for(let day=1;day<=7;day++){
 		for(let period=1;period<=13;period++){
 			var thisClass=classTable[(weekNow-1)*7*13+(day-1)*13+(period-1)];
-			document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes.code+"\n"+thisClass.name+"\n"+thisClass.classes.tpc;
+			document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes[0].code+"\n"+thisClass.name+"\n"+thisClass.classes[0].tpc;
 		}
 	}
 	document.getElementById("weekNum").textContent="第"+weekNow+"周";
