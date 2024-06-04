@@ -14,12 +14,12 @@ window.onload=function(){
 	fetch("/api/course/timeSet").then(function(response){
 		return response.json();
 	}).then(function(result){
-		classTable=eval('('+result.data.timeSet+')');
+		classTable=eval('('+result.data.timeCourseMap+')');
 	}).then(function(){
 		weekNow=1;
 		for(let day=1;day<=7;day++){
 			for(let period=1;period<=13;period++){
-				var thisClass=result.data.timeCourseMap[(weekNow-1)*7*13+(day-1)*13+(period-1)];
+				var thisClass=classTable[(weekNow-1)*7*13+(day-1)*13+(period-1)];
 				document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes.code+"\n"+thisClass.name+"\n"+thisClass.classes.tpc;
 			}
 		}
@@ -36,7 +36,7 @@ function lastWeek(){
 	weekNow--;
 	for(let day=1;day<=7;day++){
 		for(let period=1;period<=13;period++){
-			var thisClass=result.data.timeCourseMap[(weekNow-1)*7*13+(day-1)*13+(period-1)];
+			var thisClass=classTable[(weekNow-1)*7*13+(day-1)*13+(period-1)];
 			document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes.code+"\n"+thisClass.name+"\n"+thisClass.classes.tpc;
 		}
 	}
@@ -50,7 +50,7 @@ function nextWeek(){
 	weekNow++;
 	for(let day=1;day<=7;day++){
 		for(let period=1;period<=13;period++){
-			var thisClass=result.data.timeCourseMap[(weekNow-1)*7*13+(day-1)*13+(period-1)];
+			var thisClass=classTable[(weekNow-1)*7*13+(day-1)*13+(period-1)];
 			document.getElementById("showClassTable").querySelector("table").rows[period].cells[day].innerHTML=thisClass.classes.code+"\n"+thisClass.name+"\n"+thisClass.classes.tpc;
 		}
 	}
