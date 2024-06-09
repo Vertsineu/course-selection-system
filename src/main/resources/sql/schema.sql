@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS tbl_class (
     limit_count     INT,
     teach_lang_cn   VARCHAR(255),
     teach_lang_en   VARCHAR(255),
-    FOREIGN KEY (course_id) REFERENCES tbl_course(id)
+    FOREIGN KEY (course_id) REFERENCES tbl_course(id),
+    FOREIGN KEY (department_id) REFERENCES tbl_department(id)
 ) ENGINE= InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS tbl_department(
@@ -57,7 +58,8 @@ CREATE TABLE IF NOT EXISTS tbl_student(
     number          VARCHAR(32) UNIQUE NOT NULL,
     name            VARCHAR(32) NOT NULL,
     password        VARCHAR(255) NOT NULL,
-    department_id   INT
+    department_id   INT,
+    FOREIGN KEY (department_id) REFERENCES tbl_department(id)
 ) ENGINE= InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS tbl_tpc (
@@ -68,7 +70,8 @@ CREATE TABLE IF NOT EXISTS tbl_tpc (
     place           VARCHAR(255),
     teacher_id      INT,
     FOREIGN KEY (class_id) REFERENCES tbl_class(id),
-    FOREIGN KEY (teacher_id) REFERENCES tbl_teacher(id)
+    FOREIGN KEY (teacher_id) REFERENCES tbl_teacher(id),
+    PRIMARY KEY (class_id, time_week, time_day, time_period, place, teacher_id)
 ) ENGINE= InnoDB DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE IF NOT EXISTS tbl_teacher_class (
