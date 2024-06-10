@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.ustc</groupId>
     <artifactId>course-selection-system</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>course-selection-system</name>
     <description>course-selection-system</description>
     <properties>
