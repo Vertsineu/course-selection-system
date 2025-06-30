@@ -2,7 +2,7 @@
 
 ## 介绍
 
-这是 USTC 24 春季学期的《程序设计进阶》课程的大作业，一个前后端分离的，前端使用原生 html + css + javascript，后端基于 Spring Boot + MyBatis + MySQL 的学生选课系统。
+这是 USTC 24 春季学期的《程序设计进阶与实践》课程的大作业，一个前后端分离的，前端使用原生 html + css + javascript，后端基于 Spring Boot + MyBatis + MySQL 的学生选课系统。
 
 ## 特点
 
